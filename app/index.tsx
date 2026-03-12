@@ -1,4 +1,4 @@
-import SunIcon from "@/assets/icons/SunIcon";
+import Header from "@/components/Header/Header";
 import {
   WEATHER_GRADIENTS,
   WeatherCondition,
@@ -16,13 +16,15 @@ export default function TabOneScreen() {
         colors={gradient.colors}
         locations={[0, 1]}
         style={[StyleSheet.absoluteFill]}
+        children={<Header />}
       />
+
       <View
         style={[styles.cloudEffect, { backgroundColor: gradient.cloudColor }]}
-      />
-      <Text style={styles.title}>Weather App</Text>
-      <Text style={styles.temp}>29°C</Text>
-      <SunIcon />
+      >
+        <Text style={styles.title}>Weather App</Text>
+        <Text style={styles.temp}>29°C</Text>
+      </View>
     </View>
   );
 }
@@ -38,10 +40,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: "75%",
+    height: "70%",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     opacity: 0.9,
+    paddingTop: 24,
   },
   title: {
     fontSize: 20,
