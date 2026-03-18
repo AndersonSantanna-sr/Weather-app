@@ -6,7 +6,7 @@ export default function ThunderstormIcon() {
       source={animationData}
       autoPlay
       loop
-      style={{ width: 160, height: 160 }}
+      style={{ width: 200, height: 200 }}
     />
   );
 }
