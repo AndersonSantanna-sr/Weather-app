@@ -1,4 +1,5 @@
 import Menu from '@/assets/icons/Menu';
+import Settings from '@/assets/icons/Settings';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -11,7 +12,7 @@ const Header: FC<Props> = () => {
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <Menu color="white" width={24} height={24} />
+        <Settings color="white" width={20} height={20} />
         <Text style={styles.title}>Today</Text>
         <Menu color="white" width={24} height={24} />
       </View>
