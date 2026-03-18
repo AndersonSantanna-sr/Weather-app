@@ -10,10 +10,17 @@ const Header: FC<Props> = () => {
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <Text style={styles.title}>Indaiatuba</Text>
+        <Menu color="white" width={24} height={24} />
+        <Text style={styles.title}>Today</Text>
         <Menu color="white" width={24} height={24} />
       </View>
-      <Text style={styles.description}>10 March, Tuesday</Text>
+      <View style={styles.menuContainer}>
+        <Text style={styles.temp}>29°C</Text>
+        <View style={{ flexDirection: "column", alignItems: "flex-end" }}>
+          <Text style={styles.title}>Indaiatuba</Text>
+          <Text style={styles.description}>10 March, Tuesday</Text>
+        </View>
+      </View>
       <StatusIcon />
     </View>
   );

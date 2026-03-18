@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 50,
+    top: 16,
     left: 0,
     right: 0,
     alignItems: "flex-start",
@@ -18,11 +18,16 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     paddingHorizontal: 16,
-    marginTop: 8,
+    // marginTop: 8,
+  },
+  temp: {
+    fontSize: 48,
+    fontWeight: "bold",
+    color: "white",
+    zIndex: 1,
   },
   description: {
-    fontSize: 16,
-    paddingHorizontal: 16,
+    fontSize: 12,
     color: "white",
   },
 });
