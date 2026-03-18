@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import HourlyForecastCard from "./HourlyForecastCard";
+import type { FC } from 'react';
+import React from 'react';
+import HourlyForecastCard from './HourlyForecastCard';
 
 type Props = {
   time: string;

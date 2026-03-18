@@ -1,4 +1,4 @@
-import { type WeatherHour } from "@/features/weather/types/weather";
+import { type WeatherHour } from '@/features/weather/types/weather';
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -15,7 +15,7 @@ export const formatDate = (date: string): string => {
 };
 
 export const formatHour = (datetime: string): string => {
-  return datetime.split(" ")[1];
+  return datetime.split(' ')[1];
 };
 
 export const getNextHours = (
@@ -26,7 +26,7 @@ export const getNextHours = (
   const currentHour = new Date().getHours();
 
   const remaining = today.filter((item) => {
-    const hour = parseInt(item.time.split(" ")[1].split(":")[0]);
+    const hour = parseInt(item.time.split(' ')[1].split(':')[0]);
     return hour >= currentHour;
   });
 

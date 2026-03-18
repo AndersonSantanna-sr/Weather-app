@@ -1,8 +1,9 @@
-import { HumidityJson, ThermometerJson, WindJson } from "@/assets/animations";
-import Icon from "@/shared/Icon";
-import React, { FC } from "react";
-import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { HumidityJson, ThermometerJson, WindJson } from '@/assets/animations';
+import Icon from '@/shared/Icon';
+import type { FC } from 'react';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { styles } from './styles';
 
 type Props = {};
 

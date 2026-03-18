@@ -1,14 +1,13 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   contentContainer: {
-    flexDirection: "column",
-
+    flexDirection: 'column',
   },
   subtitle: {
     fontSize: 14,
@@ -16,6 +15,6 @@ export const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });

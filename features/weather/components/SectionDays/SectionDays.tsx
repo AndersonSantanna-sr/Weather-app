@@ -1,9 +1,9 @@
-import { formatHour } from "@/utils/dateHelpers";
-import React, { FC } from "react";
-import { FlatList, Text, View } from "react-native";
-import { HourlyForecastCard } from "..";
-import { WeatherHour } from "../../types/weather";
-import { styles } from "./styles";
+import { formatHour } from '@/utils/dateHelpers';
+import React, { type FC } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { HourlyForecastCard } from '..';
+import { type WeatherHour } from '../../types/weather';
+import { styles } from './styles';
 
 type Props = {
   data: WeatherHour[];

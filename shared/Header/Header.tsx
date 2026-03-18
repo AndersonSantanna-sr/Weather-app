@@ -1,8 +1,9 @@
-import Menu from "@/assets/icons/Menu";
-import React, { FC } from "react";
-import { Text, View } from "react-native";
-import StatusIcon from "../StatusIcon";
-import { styles } from "./styles";
+import Menu from '@/assets/icons/Menu';
+import type { FC } from 'react';
+import React from 'react';
+import { Text, View } from 'react-native';
+import StatusIcon from '../StatusIcon';
+import { styles } from './styles';
 
 type Props = {};
 
@@ -16,7 +17,7 @@ const Header: FC<Props> = () => {
       </View>
       <View style={styles.menuContainer}>
         <Text style={styles.temp}>29°C</Text>
-        <View style={{ flexDirection: "column", alignItems: "flex-end" }}>
+        <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
           <Text style={styles.title}>Indaiatuba</Text>
           <Text style={styles.description}>10 March, Tuesday</Text>
         </View>

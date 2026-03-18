@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import Svg, { G, Path } from "react-native-svg";
+import type { FC } from 'react';
+import React from 'react';
+import Svg, { G, Path } from 'react-native-svg';
 
 type Props = {
   color: string;

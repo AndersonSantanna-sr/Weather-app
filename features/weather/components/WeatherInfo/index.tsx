@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import WeatherInfo from "./WeatherInfo";
+import type { FC } from 'react';
+import React from 'react';
+import WeatherInfo from './WeatherInfo';
 
 type Props = {};
 

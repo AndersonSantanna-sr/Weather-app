@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,6 +11,6 @@ export const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });

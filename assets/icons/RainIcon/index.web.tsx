@@ -1,12 +1,6 @@
-import Lottie from "lottie-react";
-import animationData from "../../animations/rain.json";
+import Lottie from 'lottie-react';
+import animationData from '../../animations/rain.json';
 
 export default function RainIcon() {
-  return (
-    <Lottie
-      animationData={animationData}
-      loop
-      style={{ width: 120, height: 120 }}
-    />
-  );
+  return <Lottie animationData={animationData} loop style={{ width: 120, height: 120 }} />;
 }

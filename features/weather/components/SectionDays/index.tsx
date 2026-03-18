@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { WeatherHour } from "../../types/weather";
-import SectionTime from "./SectionDays";
+import React, { type FC } from 'react';
+import { type WeatherHour } from '../../types/weather';
+import SectionTime from './SectionDays';
 
 type Props = {
   data: WeatherHour[];

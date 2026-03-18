@@ -1,7 +1,8 @@
-import ThunderstormIcon from "@/assets/icons/ThunderstormIcon";
-import React, { FC } from "react";
-import { View } from "react-native";
-import { styles } from "./styles";
+import ThunderstormIcon from '@/assets/icons/ThunderstormIcon';
+import type { FC } from 'react';
+import React from 'react';
+import { View } from 'react-native';
+import { styles } from './styles';
 
 type Props = {};
 

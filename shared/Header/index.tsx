@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import Header from "./Header";
+import type { FC } from 'react';
+import React from 'react';
+import Header from './Header';
 
 type Props = {};
 

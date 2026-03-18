@@ -1,8 +1,8 @@
-import { ThunderstormsJson } from "@/assets/animations";
-import Icon from "@/shared/Icon";
-import React, { FC } from "react";
-import { Text, View } from "react-native";
-import { styles } from "./styles";
+import { ThunderstormsJson } from '@/assets/animations';
+import Icon from '@/shared/Icon';
+import React, { type FC } from 'react';
+import { Text, View } from 'react-native';
+import { styles } from './styles';
 
 type Props = {
   time: string;
