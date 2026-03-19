@@ -1,14 +1,18 @@
 import Menu from '@/assets/icons/Menu';
 import Settings from '@/assets/icons/Settings';
+import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
-import StatusIcon from '../StatusIcon';
-import { styles } from './styles';
+import StatusIcon from '../StatusIcon/StatusIcon';
+import { createStyles } from './styles';
 
 type Props = {};
 
 const Header: FC<Props> = () => {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>

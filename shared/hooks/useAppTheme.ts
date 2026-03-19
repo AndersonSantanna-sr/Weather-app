@@ -1,4 +1,4 @@
-import { darkTheme, lightTheme } from '@/constants/theme';
+import { darkTheme, lightTheme } from '@/shared/constants/theme';
 import { useThemeStore } from '@/store/useThemeStore';
 
 export const useAppTheme = () => {

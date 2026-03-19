@@ -1,24 +1,31 @@
-import { formatHour } from '@/utils/dateHelpers';
+import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { formatHour } from '@/shared/utils/dateHelpers';
+import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
 import React, { type FC } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { HourlyForecastCard } from '..';
 import { type WeatherHour } from '../../types/weather';
-import { styles } from './styles';
+import { createStyles } from './styles';
 
 type Props = {
   data: WeatherHour[];
 };
 
 const SectionTime: FC<Props> = ({ data }) => {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+  const { subtextColor } = useWeatherThemeStore((state) => state);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitle}>Next hours</Text>
+      <Text style={[styles.subtitle, { color: subtextColor }]}>Next hours</Text>
       <FlatList
         data={data}
         horizontal
         scrollEnabled
+        contentContainerStyle={styles.listContentContainer}
         keyExtractor={(item) => item.time}
-        ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => (
           <HourlyForecastCard
             temperature={String(item.temp_c)}

@@ -1,8 +1,11 @@
 import { ThunderstormsJson } from '@/assets/animations';
-import Icon from '@/shared/Icon';
+import Icon from '@/shared/components/Icon';
+import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
+import { BlurView } from 'expo-blur';
 import React, { type FC } from 'react';
-import { Text, View } from 'react-native';
-import { styles } from './styles';
+import { Text } from 'react-native';
+import { createStyles } from './styles';
 
 type Props = {
   time: string;
@@ -11,12 +14,16 @@ type Props = {
 };
 
 const HourlyForecastCard: FC<Props> = ({ time, icon, temperature }) => {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+  const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
+
   return (
-    <View style={styles.container}>
-      <Text>{temperature}</Text>
+    <BlurView intensity={20} tint="light" style={styles.container}>
+      <Text style={{ color: textColor }}>{temperature}</Text>
       <Icon source={ThunderstormsJson} />
-      <Text>{time}</Text>
-    </View>
+      <Text style={{ color: subtextColor }}>{time}</Text>
+    </BlurView>
   );
 };
 
