@@ -1,15 +1,18 @@
 import Menu from '@/assets/icons/Menu';
 import Settings from '@/assets/icons/Settings';
+import type { WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
-import StatusIcon from '../StatusIcon/StatusIcon';
+import WeatherIcon from '../../../../shared/components/WeatherIcon';
 import { createStyles } from './styles';
 
-type Props = {};
+type Props = {
+  weatherCondition: WeatherCondition;
+};
 
-const Header: FC<Props> = () => {
+const Header: FC<Props> = ({ weatherCondition }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
@@ -27,7 +30,9 @@ const Header: FC<Props> = () => {
           <Text style={styles.description}>10 March, Tuesday</Text>
         </View>
       </View>
-      <StatusIcon />
+      <View style={styles.weatherIconContainer}>
+        <WeatherIcon iconName={weatherCondition} size={145} />
+      </View>
     </View>
   );
 };

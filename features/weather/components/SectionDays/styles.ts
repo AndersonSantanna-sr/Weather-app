@@ -5,6 +5,7 @@ export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       paddingHorizontal: theme.spacing.md,
+      marginBottom: theme.spacing.md,
     },
     subtitle: {
       fontSize: theme.typography.fontSize.sm,

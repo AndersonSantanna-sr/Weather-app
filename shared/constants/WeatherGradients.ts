@@ -6,6 +6,7 @@ export enum WeatherCondition {
   SNOWY = 'SNOWY',
   FOGGY = 'FOGGY',
   CLEAR_NIGHT = 'CLEAR_NIGHT',
+  DRIZZLE = 'DRIZZLE',
 }
 
 export const WEATHER_GRADIENTS = {
@@ -57,5 +58,12 @@ export const WEATHER_GRADIENTS = {
     blurTint: 'light',
     textColor: '#0D2137',
     subtextColor: '#2C5364',
+  },
+  [WeatherCondition.DRIZZLE]: {
+    colors: ['#4A5568', '#A0AEC0'],
+    cloudColor: '#FFFFFF',
+    blurTint: 'light',
+    textColor: '#2D3F55',
+    subtextColor: '#506070',
   },
 } as const;

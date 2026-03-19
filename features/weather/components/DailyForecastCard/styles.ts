@@ -19,11 +19,11 @@ export const createStyles = (theme: AppTheme) =>
     weekdayText: {
       fontSize: theme.typography.fontSize.md,
       fontWeight: theme.typography.fontWeight.bold,
-      marginBottom: theme.spacing.md,
+      marginBottom: theme.spacing.xs,
     },
     dateText: {
       fontSize: theme.typography.fontSize.sm,
-      marginTop: theme.spacing.sm,
+      marginTop: theme.spacing.xs,
     },
     temperatureText: {
       flex: 0.3,

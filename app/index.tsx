@@ -1,6 +1,6 @@
 import { SectionDays, SectionTime, WeatherInfo } from '@/features/weather/components';
+import Header from '@/features/weather/components/Header';
 import { weatherDataMock } from '@/features/weather/data/weatherDataMock';
-import Header from '@/shared/components/Header';
 import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { getNextHours } from '@/shared/utils/dateHelpers';
@@ -13,7 +13,7 @@ import { createStyles } from './styles';
 
 export default function TabOneScreen() {
   const [isLoading, setIsLoading] = useState(false);
-  const weatherCondition = WeatherCondition.CLEAR_NIGHT;
+  const weatherCondition = WeatherCondition.DRIZZLE;
   const gradient = WEATHER_GRADIENTS[weatherCondition];
   const setWeatherTheme = useWeatherThemeStore((state) => state.setWeatherTheme);
   const theme = useAppTheme();
@@ -28,7 +28,7 @@ export default function TabOneScreen() {
         colors={gradient.colors}
         locations={[0, 1]}
         style={[StyleSheet.absoluteFill]}
-        children={<Header />}
+        children={<Header weatherCondition={weatherCondition} />}
       />
       <BlurView intensity={70} tint="light" style={styles.cloudEffect}>
         <ScrollView showsHorizontalScrollIndicator={false}>

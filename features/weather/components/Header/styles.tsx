@@ -10,6 +10,13 @@ export const createStyles = (_theme: AppTheme) =>
       right: 0,
       alignItems: 'flex-start',
     },
+    weatherIconContainer: {
+      position: 'absolute',
+      top: 50,
+      left: 0,
+      right: 0,
+      alignItems: 'center',
+    },
     title: {
       fontSize: 24,
       fontWeight: 'bold',
