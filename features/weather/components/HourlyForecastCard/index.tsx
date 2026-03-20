@@ -1,7 +1,7 @@
 import { ThunderstormsJson } from '@/assets/animations';
 import Icon from '@/shared/components/Icon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
-import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { BlurView } from 'expo-blur';
 import React, { type FC } from 'react';
 import { Text } from 'react-native';

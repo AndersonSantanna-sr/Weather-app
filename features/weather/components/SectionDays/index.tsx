@@ -1,5 +1,5 @@
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
-import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import React, { type FC } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { type WeatherForecastDay } from '../../types/weather';

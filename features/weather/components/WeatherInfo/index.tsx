@@ -1,7 +1,7 @@
 import { HumidityJson, ThermometerJson, WindJson } from '@/assets/animations';
 import Icon from '@/shared/components/Icon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
-import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';

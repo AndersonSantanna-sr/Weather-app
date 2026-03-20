@@ -1,6 +1,6 @@
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { formatHour } from '@/shared/utils/dateHelpers';
-import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
 import React, { type FC } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { HourlyForecastCard } from '..';

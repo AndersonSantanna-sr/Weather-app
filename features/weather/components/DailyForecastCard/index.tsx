@@ -1,8 +1,8 @@
 import { ThunderstormsJson } from '@/assets/animations';
 import Icon from '@/shared/components/Icon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { formatDate, getWeekday } from '@/shared/utils/dateHelpers';
-import { useWeatherThemeStore } from '@/store/useWeatherThemeStore';
 import { BlurView } from 'expo-blur';
 import type { FC } from 'react';
 import React from 'react';

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/shared/hooks/useColorScheme';
-import { useThemeStore } from '@/store/useThemeStore';
+import { useThemeStore } from '@/shared/store/useThemeStore';
 
 export {
   // Catch any errors thrown by the Layout component.
