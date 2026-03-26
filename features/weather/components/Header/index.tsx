@@ -2,9 +2,10 @@ import Menu from '@/assets/icons/Menu';
 import Settings from '@/assets/icons/Settings';
 import type { WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import WeatherIcon from '../../../../shared/components/WeatherIcon';
 import { createStyles } from './styles';
 
@@ -15,11 +16,13 @@ type Props = {
 const Header: FC<Props> = ({ weatherCondition }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-
+  const navigation = useRouter();
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <Settings color="white" width={20} height={20} />
+        <TouchableOpacity onPress={() => navigation.push('/settings')}>
+          <Settings color="white" width={20} height={20} />
+        </TouchableOpacity>
         <Text style={styles.title}>Today</Text>
         <Menu color="white" width={24} height={24} />
       </View>

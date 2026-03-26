@@ -1,24 +1,24 @@
 import { type AppTheme } from '@/shared/constants/theme';
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (_theme: AppTheme) =>
+export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      top: 16,
+      top: theme.spacing.lg,
       left: 0,
       right: 0,
       alignItems: 'flex-start',
     },
     weatherIconContainer: {
       position: 'absolute',
-      top: 50,
+      top: theme.spacing.xxl,
       left: 0,
       right: 0,
       alignItems: 'center',
     },
     title: {
-      fontSize: 24,
+      fontSize: theme.typography.fontSize.lg,
       fontWeight: 'bold',
       color: 'white',
     },
@@ -26,16 +26,16 @@ export const createStyles = (_theme: AppTheme) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: '100%',
-      paddingHorizontal: 16,
+      paddingHorizontal: theme.spacing.md,
     },
     temp: {
-      fontSize: 48,
+      fontSize: theme.typography.fontSize.xxl,
       fontWeight: 'bold',
       color: 'white',
       zIndex: 1,
     },
     description: {
-      fontSize: 12,
+      fontSize: theme.typography.fontSize.sm,
       color: 'white',
     },
   });

@@ -1,6 +1,7 @@
+import type { AppTheme } from '@/shared/constants/theme';
 import { StyleSheet } from 'react-native';
 
-export const createStyles = (theme: any) =>
+export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     loadingContainer: {
       flex: 1,

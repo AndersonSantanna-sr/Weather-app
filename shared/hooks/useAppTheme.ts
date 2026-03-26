@@ -1,7 +1,7 @@
 import { darkTheme, lightTheme } from '@/shared/constants/theme';
-import { useThemeStore } from '@/shared/store/useThemeStore';
+import { useSettings } from '../store/useSettings';
 
 export const useAppTheme = () => {
-  const theme = useThemeStore((state) => state.theme);
+  const theme = useSettings((state) => state.theme);
   return theme === 'dark' ? darkTheme : lightTheme;
 };

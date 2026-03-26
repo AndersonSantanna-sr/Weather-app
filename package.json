@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "start:clear": "expo start -c",
     "android": "expo run:android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -13,6 +14,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@expo/vector-icons": "^15.1.1",
+    "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-navigation/native": "^7.1.28",
     "expo": "~55.0.5",
     "expo-blur": "~55.0.10",

@@ -5,13 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/shared/hooks/useColorScheme';
-import { useThemeStore } from '@/shared/store/useThemeStore';
+import { useSettings } from '@/shared/store/useSettings';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -44,20 +40,14 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-  const { theme, setTheme } = useThemeStore();
-
-  useEffect(() => {
-    if (!theme) {
-      setTheme(colorScheme);
-    }
-  }, []);
+  const { theme } = useSettings();
 
   return (
     <ThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="settings" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );
