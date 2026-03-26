@@ -23,6 +23,7 @@ const SectionTime: FC<Props> = ({ data }) => {
         data={data}
         horizontal
         scrollEnabled
+        nestedScrollEnabled
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.listContentContainer}
         keyExtractor={(item) => item.time}

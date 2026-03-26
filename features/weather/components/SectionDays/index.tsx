@@ -1,7 +1,7 @@
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import React, { type FC } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { type WeatherForecastDay } from '../../types/weather';
 import DailyForecastCard from '../DailyForecastCard';
 import { createStyles } from './styles';
@@ -18,18 +18,16 @@ const SectionDays: FC<Props> = ({ data }) => {
   return (
     <View style={styles.container}>
       <Text style={[styles.subtitle, { color: subtextColor }]}>Next 7 Days</Text>
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.date}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => (
+      {data.map((item, index) => (
+        <React.Fragment key={item.date}>
           <DailyForecastCard
             date={item.date}
             icon={item.day.condition.icon}
             avgTemperature={item.day.avgtemp_c}
           />
-        )}
-      />
+          {index < data.length - 1 && <View style={styles.separator} />}
+        </React.Fragment>
+      ))}
     </View>
   );
 };
