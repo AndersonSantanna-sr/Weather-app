@@ -1,21 +1,21 @@
-import { ThunderstormsJson } from '@/assets/animations';
-import Icon from '@/shared/components/Icon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
-import { formatDate, getWeekday } from '@/shared/utils/dateHelpers';
 import { BlurView } from 'expo-blur';
-import type { FC } from 'react';
+import { isEmpty } from 'lodash';
+import type { FC, ReactNode } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
+import If from '../If';
 import { createStyles } from './styles';
 
 type Props = {
-  date: string;
-  icon: string;
+  title: string;
+  subtitle?: string;
+  icon: ReactNode;
   avgTemperature: number;
 };
 
-const DailyForecastCard: FC<Props> = ({ date, icon, avgTemperature }) => {
+const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
@@ -23,19 +23,19 @@ const DailyForecastCard: FC<Props> = ({ date, icon, avgTemperature }) => {
   return (
     <BlurView intensity={20} tint="light" style={styles.container}>
       <View style={styles.dateContainer}>
-        <Text style={[styles.weekdayText, { color: textColor }]}>{getWeekday(date)}</Text>
-        <Text style={[styles.dateText, { color: subtextColor }]}>{formatDate(date)}</Text>
+        <Text style={[styles.weekdayText, { color: textColor }]}>{title}</Text>
+        <If condition={!isEmpty(subtitle)}>
+          <Text style={[styles.dateText, { color: subtextColor }]}>{subtitle}</Text>
+        </If>
       </View>
       <View style={styles.flexContainer}>
         <Text style={[styles.temperatureText, { color: textColor }]}>
           {avgTemperature.toFixed(0)}°C
         </Text>
       </View>
-      <View style={styles.flexContainer}>
-        <Icon source={ThunderstormsJson} />
-      </View>
+      <View style={styles.flexContainer}>{icon}</View>
     </BlurView>
   );
 };
 
-export default DailyForecastCard;
+export default ForecastCard;
