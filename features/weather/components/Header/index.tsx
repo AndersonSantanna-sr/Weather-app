@@ -17,14 +17,21 @@ const Header: FC<Props> = ({ weatherCondition }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const navigation = useRouter();
+
+  const handleNavigationSettings = () => navigation.push('/settings');
+
+  const handleNavigationSearch = () => navigation.push('/search');
+
   return (
     <View style={styles.container}>
       <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={() => navigation.push('/settings')}>
+        <TouchableOpacity onPress={handleNavigationSettings}>
           <Settings color="white" width={20} height={20} />
         </TouchableOpacity>
         <Text style={styles.title}>Today</Text>
-        <Menu color="white" width={24} height={24} />
+        <TouchableOpacity onPress={handleNavigationSearch}>
+          <Menu color="white" width={24} height={24} />
+        </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
         <Text style={styles.temp}>29°C</Text>
