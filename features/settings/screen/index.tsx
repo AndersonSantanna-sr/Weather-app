@@ -44,14 +44,7 @@ const Settings: FC<Props> = () => {
         colors={gradient.colors}
         locations={[0, 1]}
         style={[StyleSheet.absoluteFill]}
-        // children={<Header weatherCondition={weatherCondition} />}
       />
-      {/* <ItemSettings
-        title="Theme"
-        description={theme}
-        icon={<MaterialCommunityIcons name="theme-light-dark" size={24} color="black" />}
-        input={<Switch />}
-      /> */}
       <ItemSettings
         title="Temperature Unit"
         icon={<MaterialCommunityIcons name="weather-sunny" size={24} color="black" />}
