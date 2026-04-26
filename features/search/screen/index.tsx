@@ -1,6 +1,7 @@
 import ForecastCard from '@/shared/components/ForecastCard';
 import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { formatRelativeTime } from '@/shared/utils/dateHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -9,23 +10,22 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Autocomplete } from '../components';
+import { useSearchStore } from '../stores/useSearchStore';
 import { createStyles } from './styles';
 
-type Props = {};
-
-const Search: FC<Props> = () => {
+const Search: FC = () => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const navigation = useRouter();
-  const weatherCondition = WeatherCondition.DRIZZLE;
-  const gradient = WEATHER_GRADIENTS[weatherCondition];
-  const weather = [
-    { id: '1', name: 'New York' },
-    { id: '2', name: 'London' },
-    { id: '3', name: 'Tokyo' },
-  ];
+  const router = useRouter();
+  const gradient = WEATHER_GRADIENTS[WeatherCondition.DRIZZLE];
+  const { recentSearches, setSelectedQuery } = useSearchStore();
 
-  const handleNavigationBack = () => navigation.back();
+  const handleRecentPress = (lat: number, lon: number) => {
+    setSelectedQuery(`${lat},${lon}`);
+    router.push('/');
+  };
+
+  const handleNavigationBack = () => router.back();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,10 +44,19 @@ const Search: FC<Props> = () => {
         <View style={styles.subtitleContainer}>
           <Text style={styles.subtitle}>Recently seen:</Text>
         </View>
-        {weather.map((item) => (
-          <View key={item.id} style={styles.forecastCardContainer}>
-            <ForecastCard title={item.name} avgTemperature={27} icon={item.id} />
-          </View>
+        {recentSearches.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.forecastCardContainer}
+            onPress={() => handleRecentPress(item.lat, item.lon)}
+          >
+            <ForecastCard
+              title={item.name}
+              subtitle={formatRelativeTime(item.searchedAt)}
+              avgTemperature={0}
+              icon={0}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </SafeAreaView>
