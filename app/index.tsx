@@ -1,6 +1,12 @@
-import { SectionDays, SectionTime, WeatherInfo } from '@/features/weather/components';
+import {
+  LocationPermissionDenied,
+  SectionDays,
+  SectionTime,
+  WeatherInfo,
+} from '@/features/weather/components';
 import Header from '@/features/weather/components/Header';
 import { useForecast } from '@/features/weather/hooks/useForecast';
+import { useUserLocation } from '@/features/weather/hooks/useUserLocation';
 import { WEATHER_GRADIENTS } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { getNextHours } from '@/shared/utils/dateHelpers';
@@ -11,7 +17,8 @@ import { ActivityIndicator, Modal, ScrollView, StyleSheet, View } from 'react-na
 import { createStyles } from './styles';
 
 export default function TabOneScreen() {
-  const { data: weatherData, isLoading } = useForecast('Indaiatuba');
+  const { locationQuery, permissionDenied, retry } = useUserLocation();
+  const { data: weatherData, isLoading } = useForecast(locationQuery);
   const weatherCondition = mapCodeToCondition(
     weatherData?.current?.condition.code || 0,
     !!weatherData?.current.is_day
@@ -20,13 +27,15 @@ export default function TabOneScreen() {
   const theme = useAppTheme();
   const styles = createStyles(theme);
 
+  if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
+
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={gradient.colors}
         locations={[0, 1]}
         style={[StyleSheet.absoluteFill]}
-        children={<Header weatherCondition={weatherCondition} />}
+        children={<Header weatherData={weatherData} weatherCondition={weatherCondition} />}
       />
       <BlurView intensity={70} tint="light" style={styles.cloudEffect}>
         <ScrollView showsHorizontalScrollIndicator={false}>
