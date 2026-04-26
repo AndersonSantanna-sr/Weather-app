@@ -5,7 +5,7 @@ import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSearch } from '../../hooks/useSearch';
 import { useSearchStore } from '../../stores/useSearchStore';
 import { createStyles } from './styles';
@@ -27,6 +27,7 @@ const Autocomplete: FC = () => {
   const handleSelect = (location: (typeof results)[number]) => {
     addRecentSearch({ ...location, searchedAt: Date.now() });
     setSelectedQuery(`${location.lat},${location.lon}`);
+    Keyboard.dismiss();
     router.back();
   };
 
@@ -34,7 +35,7 @@ const Autocomplete: FC = () => {
     <BlurView intensity={40} tint="light">
       <View style={styles.inputContainer}>
         <View style={styles.iconContainer}>
-          <FontAwesome name="search" size={18} color="#444444" />
+          <FontAwesome name="search" size={18} color={theme.colors.text.secondary} />
         </View>
         <TextInput
           value={inputValue}
@@ -44,16 +45,26 @@ const Autocomplete: FC = () => {
           autoFocus
         />
         <If condition={isFetching && debouncedQuery.length >= 3}>
-          <ActivityIndicator size="small" color="#444444" style={{ marginRight: 8 }} />
+          <ActivityIndicator
+            size="small"
+            color={theme.colors.text.secondary}
+            style={styles.activityIndicator}
+          />
         </If>
       </View>
       <If condition={!!debouncedQuery.length && results.length > 0}>
-        <View style={styles.optionContainer}>
+        <View
+          style={styles.optionContainer}
+          accessibilityRole="list"
+          accessibilityLabel="Search results"
+        >
           {results.map((item) => (
             <TouchableOpacity
               key={item.id}
               style={styles.optionItem}
               onPress={() => handleSelect(item)}
+              accessibilityRole="button"
+              accessibilityLabel={`Select ${item.name}, ${item.region}, ${item.country}`}
             >
               <Text style={styles.optionText}>
                 {item.name}, {item.region}, {item.country}
