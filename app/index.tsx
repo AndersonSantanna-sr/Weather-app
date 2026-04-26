@@ -29,7 +29,6 @@ export default function TabOneScreen() {
   const gradient = WEATHER_GRADIENTS[weatherCondition];
   const theme = useAppTheme();
   const styles = createStyles(theme);
-
   if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
 
   return (
