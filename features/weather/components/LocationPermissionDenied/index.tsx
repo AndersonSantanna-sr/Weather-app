@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { createStyles } from './styles';
 
 type Props = {
@@ -21,7 +21,7 @@ const LocationPermissionDenied: FC<Props> = ({ onRetry }) => {
     <LinearGradient
       colors={gradient.colors}
       locations={[0, 1]}
-      style={StyleSheet.absoluteFill}
+      style={{ flex: 1 }}
     >
       <View style={styles.container}>
         <Ionicons
