@@ -15,7 +15,7 @@ export const createStyles = (theme: AppTheme) =>
     },
     title: {
       fontSize: theme.typography.fontSize.lg,
-      fontWeight: 'bold',
+      fontWeight: theme.typography.fontWeight.bold,
       color: 'white',
       textAlign: 'center',
       marginBottom: theme.spacing.sm,
@@ -37,7 +37,7 @@ export const createStyles = (theme: AppTheme) =>
     },
     buttonText: {
       fontSize: theme.typography.fontSize.md,
-      fontWeight: '600',
+      fontWeight: theme.typography.fontWeight.bold,
       color: 'white',
     },
     buttonSecondary: {
