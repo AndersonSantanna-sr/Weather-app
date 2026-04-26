@@ -44,20 +44,26 @@ const Search: FC = () => {
         <View style={styles.subtitleContainer}>
           <Text style={styles.subtitle}>Recently seen:</Text>
         </View>
-        {recentSearches.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.forecastCardContainer}
-            onPress={() => handleRecentPress(item.lat, item.lon)}
-          >
-            <ForecastCard
-              title={item.name}
-              subtitle={formatRelativeTime(item.searchedAt)}
-              avgTemperature={0}
-              icon={0}
-            />
-          </TouchableOpacity>
-        ))}
+        {recentSearches.length === 0 ? (
+          <Text style={styles.subtitle}>No recent searches yet.</Text>
+        ) : (
+          recentSearches.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.forecastCardContainer}
+              onPress={() => handleRecentPress(item.lat, item.lon)}
+              accessibilityRole="button"
+              accessibilityLabel={`View weather for ${item.name}`}
+            >
+              <ForecastCard
+                title={item.name}
+                subtitle={formatRelativeTime(item.searchedAt)}
+                avgTemperature={0}
+                icon={0}
+              />
+            </TouchableOpacity>
+          ))
+        )}
       </View>
     </SafeAreaView>
   );
