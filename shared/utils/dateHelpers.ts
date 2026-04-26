@@ -37,7 +37,9 @@ export const getNextHours = (
 };
 
 export const formatRelativeTime = (timestamp: number): string => {
+  if (!timestamp || !Number.isFinite(timestamp)) return '–';
   const diffMs = Date.now() - timestamp;
+  if (diffMs < 0) return 'agora';
   const diffMins = Math.floor(diffMs / 60_000);
   if (diffMins < 1) return 'agora';
   if (diffMins < 60) return `${diffMins}min atrás`;
