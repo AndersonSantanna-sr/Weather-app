@@ -7,6 +7,7 @@ import {
 import Header from '@/features/weather/components/Header';
 import { useForecast } from '@/features/weather/hooks/useForecast';
 import { useUserLocation } from '@/features/weather/hooks/useUserLocation';
+import { useSearchStore } from '@/features/search/stores/useSearchStore';
 import { WEATHER_GRADIENTS } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { getNextHours } from '@/shared/utils/dateHelpers';
@@ -18,7 +19,9 @@ import { createStyles } from './styles';
 
 export default function TabOneScreen() {
   const { locationQuery, permissionDenied, retry } = useUserLocation();
-  const { data: weatherData, isLoading } = useForecast(locationQuery);
+  const { selectedQuery } = useSearchStore();
+  const activeQuery = selectedQuery || locationQuery;
+  const { data: weatherData, isLoading } = useForecast(activeQuery);
   const weatherCondition = mapCodeToCondition(
     weatherData?.current?.condition.code || 0,
     !!weatherData?.current.is_day
