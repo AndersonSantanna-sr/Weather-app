@@ -24,7 +24,8 @@ const SectionDays: FC<Props> = ({ data }) => {
           <ForecastCard
             title={getWeekday(item.date)}
             subtitle={formatDate(item.date)}
-            icon={item.day.condition.icon}
+            icon={item.day.condition.code}
+            isDay
             avgTemperature={item.day.avgtemp_c}
           />
           {index < data.length - 1 && <View style={styles.separator} />}

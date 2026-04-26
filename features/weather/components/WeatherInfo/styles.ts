@@ -9,6 +9,7 @@ export const createStyles = (theme: AppTheme) =>
     },
     contentContainer: {
       flexDirection: 'column',
+      alignItems: 'center',
     },
     subtitle: {
       fontSize: theme.typography.fontSize.sm,

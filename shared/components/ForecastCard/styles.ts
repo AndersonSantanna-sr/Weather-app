@@ -6,9 +6,6 @@ export const createStyles = (theme: AppTheme) =>
     container: {
       padding: theme.spacing.md,
       borderColor: theme.colors.border.default,
-      // borderRadius: theme.borderRadius.md,
-      borderTopLeftRadius: theme.borderRadius.lg,
-      borderTopRightRadius: theme.borderRadius.lg,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

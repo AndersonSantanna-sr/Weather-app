@@ -1,6 +1,4 @@
-import { ThunderstormsJson } from '@/assets/animations';
 import ForecastCard from '@/shared/components/ForecastCard';
-import Icon from '@/shared/components/Icon';
 import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,11 +46,7 @@ const Search: FC<Props> = () => {
         </View>
         {weather.map((item) => (
           <View key={item.id} style={styles.forecastCardContainer}>
-            <ForecastCard
-              title={item.name}
-              avgTemperature={27}
-              icon={<Icon source={ThunderstormsJson} />}
-            />
+            <ForecastCard title={item.name} avgTemperature={27} icon={item.id} />
           </View>
         ))}
       </View>

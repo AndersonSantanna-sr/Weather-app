@@ -1,7 +1,7 @@
 import { TemperatureUnit } from '../types/units';
 
-export function convertTemperature(temperature: number, unit: TemperatureUnit): number {
-  if (unit === TemperatureUnit.CELSIUS) return temperature;
+export const getTemperatureUnitLabel = (temperature: number, unit: TemperatureUnit): string => {
+  if (unit === TemperatureUnit.CELSIUS) return String(temperature.toFixed(0)).concat('°C');
 
-  return (temperature * 9) / 5 + 32;
-}
+  return String((temperature * 9) / 5 + 32).concat('°F');
+};

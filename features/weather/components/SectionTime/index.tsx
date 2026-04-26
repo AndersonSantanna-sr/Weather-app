@@ -30,8 +30,9 @@ const SectionTime: FC<Props> = ({ data }) => {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ item }) => (
           <HourlyForecastCard
-            temperature={String(item.temp_c)}
-            icon={item.condition.icon}
+            temperature={Number(item.temp_c.toFixed(0))}
+            iconCode={item.condition.code}
+            isDay={Boolean(item.is_day)}
             time={formatHour(item.time)}
           />
         )}

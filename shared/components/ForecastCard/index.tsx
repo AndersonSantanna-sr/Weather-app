@@ -1,27 +1,33 @@
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useSettings } from '@/shared/store/useSettings';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
+import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
+import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 import { BlurView } from 'expo-blur';
 import { isEmpty } from 'lodash';
-import type { FC, ReactNode } from 'react';
+import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
 import If from '../If';
+import WeatherIcon from '../WeatherIcon';
 import { createStyles } from './styles';
 
 type Props = {
   title: string;
   subtitle?: string;
-  icon: ReactNode;
+  isDay?: boolean;
+  icon: number;
   avgTemperature: number;
 };
 
-const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature }) => {
+const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature, isDay }) => {
   const theme = useAppTheme();
+  const temperatureUnit = useSettings((state) => state.temperatureUnit);
   const styles = createStyles(theme);
   const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
 
   return (
-    <BlurView intensity={20} tint="light" style={styles.container}>
+    <BlurView intensity={70} tint="light" style={styles.container}>
       <View style={styles.dateContainer}>
         <Text style={[styles.weekdayText, { color: textColor }]}>{title}</Text>
         <If condition={!isEmpty(subtitle)}>
@@ -30,10 +36,12 @@ const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature }) => {
       </View>
       <View style={styles.flexContainer}>
         <Text style={[styles.temperatureText, { color: textColor }]}>
-          {avgTemperature.toFixed(0)}°C
+          {getTemperatureUnitLabel(Number(avgTemperature.toFixed(0)), temperatureUnit)}
         </Text>
       </View>
-      <View style={styles.flexContainer}>{icon}</View>
+      <View style={styles.flexContainer}>
+        <WeatherIcon iconName={mapCodeToCondition(icon, !!isDay)} />
+      </View>
     </BlurView>
   );
 };

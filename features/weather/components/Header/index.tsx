@@ -2,11 +2,15 @@ import Menu from '@/assets/icons/Menu';
 import Settings from '@/assets/icons/Settings';
 import type { WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useSettings } from '@/shared/store/useSettings';
+import { formatDate, getWeekday } from '@/shared/utils/dateHelpers';
+import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import WeatherIcon from '../../../../shared/components/WeatherIcon';
+import { useWeatherForecast } from '../../stores/useWeatherForecastStore';
 import { createStyles } from './styles';
 
 type Props = {
@@ -17,7 +21,10 @@ const Header: FC<Props> = ({ weatherCondition }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const navigation = useRouter();
-
+  const { temperatureUnit } = useSettings();
+  const { weatherData } = useWeatherForecast();
+  const currentDate = new Date();
+  const formatted = currentDate.toISOString().split('T')[0];
   const handleNavigationSettings = () => navigation.push('/settings');
 
   const handleNavigationSearch = () => navigation.push('/search');
@@ -34,10 +41,14 @@ const Header: FC<Props> = ({ weatherCondition }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.menuContainer}>
-        <Text style={styles.temp}>29°C</Text>
+        <Text style={styles.temp}>
+          {getTemperatureUnitLabel(weatherData?.current.temp_c || 0, temperatureUnit)}
+        </Text>
         <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
           <Text style={styles.title}>Indaiatuba</Text>
-          <Text style={styles.description}>10 March, Tuesday</Text>
+          <Text style={styles.description}>
+            {formatDate(formatted)}. {getWeekday(formatted)}
+          </Text>
         </View>
       </View>
       <View style={styles.weatherIconContainer}>
