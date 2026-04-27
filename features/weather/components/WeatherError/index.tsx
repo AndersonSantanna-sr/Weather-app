@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
-import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { createStyles } from './styles';
 
