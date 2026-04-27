@@ -6,5 +6,6 @@ export const useForecast = (query: string) => {
     queryKey: ['forecast', query],
     queryFn: () => getForecast(query),
     enabled: !!query,
+    staleTime: 0,
   });
 };
