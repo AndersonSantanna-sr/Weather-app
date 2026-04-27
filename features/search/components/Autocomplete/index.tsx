@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useSearch } from '../../hooks/useSearch';
 import { useSearchStore } from '../../stores/useSearchStore';
@@ -18,7 +18,7 @@ const Autocomplete: FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [toastVisible, setToastVisible] = useState(false);
-  const { data: results = [], isFetching, isError } = useSearch(debouncedQuery);
+  const { data: results = [], isFetching, isError, error } = useSearch(debouncedQuery);
   const { addRecentSearch, setSelectedQuery } = useSearchStore();
 
   useEffect(() => {
@@ -27,8 +27,14 @@ const Autocomplete: FC = () => {
   }, [inputValue]);
 
   useEffect(() => {
-    if (isError) setToastVisible(true);
-  }, [isError]);
+    if (isError && error) {
+      setToastVisible(false);
+      const id = setTimeout(() => setToastVisible(true), 0);
+      return () => clearTimeout(id);
+    }
+  }, [isError, error]);
+
+  const handleHideToast = useCallback(() => setToastVisible(false), []);
 
   const handleSelect = (location: (typeof results)[number]) => {
     addRecentSearch({ ...location, searchedAt: Date.now() });
@@ -42,7 +48,7 @@ const Autocomplete: FC = () => {
       <Toast
         message="Erro ao buscar cidades. Tente novamente."
         visible={toastVisible}
-        onHide={() => setToastVisible(false)}
+        onHide={handleHideToast}
       />
       <BlurView intensity={40} tint="light">
         <View style={styles.inputContainer}>
@@ -56,7 +62,7 @@ const Autocomplete: FC = () => {
             style={styles.input}
             autoFocus
             autoCorrect={false}
-            autoCapitalize="words"
+            autoCapitalize="none"
             accessibilityLabel="Search for a location"
           />
           <If condition={isFetching && debouncedQuery.length >= 3}>
