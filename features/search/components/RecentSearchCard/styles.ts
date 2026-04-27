@@ -7,6 +7,32 @@ export const createStyles = (theme: AppTheme) =>
       padding: theme.spacing.md,
       alignItems: 'center',
     },
+    errorCard: {
+      padding: theme.spacing.md,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    errorLeft: {
+      flex: 0.55,
+      flexDirection: 'column',
+    },
+    errorName: {
+      fontSize: theme.typography.fontSize.md,
+      fontWeight: theme.typography.fontWeight.bold,
+      marginBottom: theme.spacing.xs,
+    },
+    errorSubtitle: {
+      fontSize: theme.typography.fontSize.sm,
+      marginTop: theme.spacing.xs,
+    },
+    errorTemp: {
+      fontSize: theme.typography.fontSize.lg,
+      fontWeight: theme.typography.fontWeight.bold,
+    },
+    retryButton: {
+      padding: theme.spacing.xs,
+    },
     removeButton: {
       position: 'absolute',
       top: theme.spacing.xs + 2,
