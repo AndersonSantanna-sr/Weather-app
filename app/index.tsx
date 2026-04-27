@@ -3,6 +3,7 @@ import {
   LocationPermissionDenied,
   SectionDays,
   SectionTime,
+  WeatherError,
   WeatherInfo,
 } from '@/features/weather/components';
 import Header from '@/features/weather/components/Header';
@@ -21,7 +22,7 @@ export default function TabOneScreen() {
   const { locationQuery, permissionDenied, retry } = useUserLocation();
   const { selectedQuery } = useSearchStore();
   const activeQuery = selectedQuery ?? locationQuery;
-  const { data: weatherData, isLoading } = useForecast(activeQuery);
+  const { data: weatherData, isLoading, isError, refetch } = useForecast(activeQuery);
   const weatherCondition = mapCodeToCondition(
     weatherData?.current?.condition.code || 0,
     !!weatherData?.current.is_day
@@ -38,6 +39,8 @@ export default function TabOneScreen() {
       </View>
     );
   }
+
+  if (isError) return <WeatherError onRetry={refetch} />;
 
   return (
     <View style={styles.container}>
