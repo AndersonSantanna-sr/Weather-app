@@ -18,7 +18,7 @@ const SectionDays: FC<Props> = ({ data }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.subtitle, { color: subtextColor }]}>Next 7 Days</Text>
+      <Text style={[styles.subtitle, { color: subtextColor }]}>Next {data.length} Days</Text>
       {data.map((item, index) => (
         <React.Fragment key={item.date}>
           <ForecastCard

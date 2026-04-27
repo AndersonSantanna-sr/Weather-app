@@ -1,3 +1,4 @@
+import { useSearchStore } from '@/features/search/stores/useSearchStore';
 import {
   LocationPermissionDenied,
   SectionDays,
@@ -18,7 +19,9 @@ import { createStyles } from './styles';
 
 export default function TabOneScreen() {
   const { locationQuery, permissionDenied, retry } = useUserLocation();
-  const { data: weatherData, isLoading } = useForecast(locationQuery);
+  const { selectedQuery } = useSearchStore();
+  const activeQuery = selectedQuery ?? locationQuery;
+  const { data: weatherData, isLoading } = useForecast(activeQuery);
   const weatherCondition = mapCodeToCondition(
     weatherData?.current?.condition.code || 0,
     !!weatherData?.current.is_day
@@ -26,8 +29,15 @@ export default function TabOneScreen() {
   const gradient = WEATHER_GRADIENTS[weatherCondition];
   const theme = useAppTheme();
   const styles = createStyles(theme);
-
   if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
+
+  if (!activeQuery) {
+    return (
+      <View style={styles.gpsLoadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

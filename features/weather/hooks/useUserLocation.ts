@@ -8,16 +8,20 @@ export const useUserLocation = () => {
   const appState = useRef(AppState.currentState);
 
   const requestLocation = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setPermissionDenied(true);
+        return;
+      }
+      setPermissionDenied(false);
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+      setLocationQuery(`${location.coords.latitude},${location.coords.longitude}`);
+    } catch {
       setPermissionDenied(true);
-      return;
     }
-    setPermissionDenied(false);
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.High,
-    });
-    setLocationQuery(`${location.coords.latitude},${location.coords.longitude}`);
   };
 
   useEffect(() => {
