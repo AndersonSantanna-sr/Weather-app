@@ -35,4 +35,7 @@ export const createStyles = (theme: AppTheme) =>
       zIndex: 1,
       overflow: 'hidden',
     },
+    activityIndicator: {
+      marginHorizontal: theme.spacing.sm,
+    },
   });
