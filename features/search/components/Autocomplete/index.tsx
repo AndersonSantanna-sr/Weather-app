@@ -43,6 +43,9 @@ const Autocomplete: FC = () => {
           placeholder="Search"
           style={styles.input}
           autoFocus
+          autoCorrect={false}
+          autoCapitalize="words"
+          accessibilityLabel="Search for a location"
         />
         <If condition={isFetching && debouncedQuery.length >= 3}>
           <ActivityIndicator

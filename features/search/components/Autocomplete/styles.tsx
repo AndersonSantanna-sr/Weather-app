@@ -6,15 +6,9 @@ export const createStyles = (theme: AppTheme) =>
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      // borderWidth: 1,
-      // borderColor: theme.colors.border.default,
-      // borderRadius: 8,
-      // paddingHorizontal: 12,
-      // paddingVertical: 8,
-      // marginBottom: 16,
       width: '80%',
     },
-    iconContainer: { paddingHorizontal: 8 },
+    iconContainer: { paddingHorizontal: theme.spacing.sm },
     input: {
       width: '100%',
       fontSize: theme.typography.fontSize.md,
@@ -40,8 +34,5 @@ export const createStyles = (theme: AppTheme) =>
       right: 0,
       zIndex: 1,
       overflow: 'hidden',
-    },
-    activityIndicator: {
-      marginRight: theme.spacing.sm,
     },
   });

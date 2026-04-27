@@ -1,7 +1,5 @@
-import ForecastCard from '@/shared/components/ForecastCard';
 import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
-import { formatRelativeTime } from '@/shared/utils/dateHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -9,7 +7,7 @@ import type { FC } from 'react';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Autocomplete } from '../components';
+import { Autocomplete, RecentSearchCard } from '../components';
 import { useSearchStore } from '../stores/useSearchStore';
 import { createStyles } from './styles';
 
@@ -22,7 +20,7 @@ const Search: FC = () => {
 
   const handleRecentPress = (lat: number, lon: number) => {
     setSelectedQuery(`${lat},${lon}`);
-    router.push('/');
+    router.back();
   };
 
   const handleNavigationBack = () => router.back();
@@ -48,20 +46,12 @@ const Search: FC = () => {
           <Text style={styles.subtitle}>No recent searches yet.</Text>
         ) : (
           recentSearches.map((item) => (
-            <TouchableOpacity
+            <RecentSearchCard
               key={item.id}
+              item={item}
               style={styles.forecastCardContainer}
               onPress={() => handleRecentPress(item.lat, item.lon)}
-              accessibilityRole="button"
-              accessibilityLabel={`View weather for ${item.name}`}
-            >
-              <ForecastCard
-                title={item.name}
-                subtitle={formatRelativeTime(item.searchedAt)}
-                avgTemperature={0}
-                icon={0}
-              />
-            </TouchableOpacity>
+            />
           ))
         )}
       </View>
