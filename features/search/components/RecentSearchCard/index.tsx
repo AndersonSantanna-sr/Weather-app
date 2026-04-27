@@ -22,7 +22,7 @@ const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const { data, isFetching, isError, refetch } = useForecast(`${item.lat},${item.lon}`);
-  const { removeRecentSearch } = useSearchStore();
+  const removeRecentSearch = useSearchStore((state) => state.removeRecentSearch);
   const textColor = useWeatherThemeStore((state) => state.textColor);
   const subtextColor = useWeatherThemeStore((state) => state.subtextColor);
   const translateX = useRef(new Animated.Value(0)).current;

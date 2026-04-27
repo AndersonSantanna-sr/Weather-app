@@ -31,6 +31,9 @@ export const createStyles = (theme: AppTheme) =>
       fontWeight: theme.typography.fontWeight.bold,
     },
     retryButton: {
+      position: 'absolute',
+      top: theme.spacing.xs + 2,
+      right: theme.spacing.xl + theme.spacing.md,
       padding: theme.spacing.xs,
     },
     removeButton: {
