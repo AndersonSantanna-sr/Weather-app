@@ -31,6 +31,14 @@ export default function TabOneScreen() {
   const styles = createStyles(theme);
   if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
 
+  if (!activeQuery) {
+    return (
+      <View style={styles.gpsLoadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
