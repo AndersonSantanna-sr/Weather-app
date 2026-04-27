@@ -6,6 +6,7 @@ import { formatRelativeTime } from '@/shared/utils/dateHelpers';
 import { Ionicons } from '@expo/vector-icons';
 import type { FC } from 'react';
 import React, { useRef, useState } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 import { ActivityIndicator, Animated, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { useSearchStore } from '../../stores/useSearchStore';
 import type { SearchLocation } from '../../types/search';
@@ -14,7 +15,7 @@ import { createStyles } from './styles';
 type Props = {
   item: SearchLocation;
   onPress: () => void;
-  style?: object;
+  style?: StyleProp<ViewStyle>;
 };
 
 const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
@@ -22,7 +23,8 @@ const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
   const styles = createStyles(theme);
   const { data, isFetching, isError, refetch } = useForecast(`${item.lat},${item.lon}`);
   const { removeRecentSearch } = useSearchStore();
-  const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
+  const textColor = useWeatherThemeStore((state) => state.textColor);
+  const subtextColor = useWeatherThemeStore((state) => state.subtextColor);
   const translateX = useRef(new Animated.Value(0)).current;
   const [confirmVisible, setConfirmVisible] = useState(false);
 
@@ -38,44 +40,50 @@ const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
   return (
     <>
       <Animated.View style={[style, { transform: [{ translateX }] }]}>
-        <TouchableOpacity
-          onPress={onPress}
-          accessibilityRole="button"
-          accessibilityLabel={`View weather for ${item.name}`}
-        >
-          {isFetching && !data ? (
-            <View style={styles.loading}>
-              <ActivityIndicator size="small" color={theme.colors.text.secondary} />
-            </View>
-          ) : isError ? (
-            <View style={styles.errorCard}>
-              <View style={styles.errorLeft}>
-                <Text style={[styles.errorName, { color: textColor }]}>{item.name}</Text>
-                <Text style={[styles.errorSubtitle, { color: subtextColor }]}>
-                  {formatRelativeTime(item.searchedAt)}
-                </Text>
+        <View>
+          <TouchableOpacity
+            onPress={onPress}
+            accessibilityRole="button"
+            accessibilityLabel={`View weather for ${item.name}`}
+          >
+            {isFetching && !data ? (
+              <View style={styles.loading}>
+                <ActivityIndicator size="small" color={theme.colors.text.secondary} />
               </View>
-              <Text style={[styles.errorTemp, { color: textColor }]}>—</Text>
-              <Ionicons name="warning-outline" size={24} color={subtextColor} />
-              <TouchableOpacity
-                style={styles.retryButton}
-                onPress={() => refetch()}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                accessibilityRole="button"
-                accessibilityLabel={`Retry loading weather for ${item.name}`}
-              >
-                <Ionicons name="refresh-outline" size={20} color={textColor} />
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <ForecastCard
-              title={item.name}
-              subtitle={formatRelativeTime(item.searchedAt)}
-              avgTemperature={data?.current.temp_c ?? 0}
-              icon={data?.current.condition.code ?? 0}
-              isDay={!!data?.current.is_day}
-            />
+            ) : isError ? (
+              <View style={styles.errorCard}>
+                <View style={styles.errorLeft}>
+                  <Text style={[styles.errorName, { color: textColor }]}>{item.name}</Text>
+                  <Text style={[styles.errorSubtitle, { color: subtextColor }]}>
+                    {formatRelativeTime(item.searchedAt)}
+                  </Text>
+                </View>
+                <Text style={[styles.errorTemp, { color: textColor }]}>—</Text>
+                <Ionicons name="warning-outline" size={24} color={subtextColor} />
+              </View>
+            ) : (
+              <ForecastCard
+                title={item.name}
+                subtitle={formatRelativeTime(item.searchedAt)}
+                avgTemperature={data?.current.temp_c ?? 0}
+                icon={data?.current.condition.code ?? 0}
+                isDay={!!data?.current.is_day}
+              />
+            )}
+          </TouchableOpacity>
+
+          {isError && (
+            <TouchableOpacity
+              style={styles.retryButton}
+              onPress={() => refetch()}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              accessibilityRole="button"
+              accessibilityLabel={`Retry loading weather for ${item.name}`}
+            >
+              <Ionicons name="refresh-outline" size={20} color={textColor} />
+            </TouchableOpacity>
           )}
+
           <TouchableOpacity
             style={styles.removeButton}
             onPress={() => setConfirmVisible(true)}
@@ -85,7 +93,7 @@ const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
           >
             <Ionicons name="close" size={18} color={textColor} />
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       </Animated.View>
 
       <Modal
