@@ -40,7 +40,7 @@ export default function TabOneScreen() {
     );
   }
 
-  if (isError) return <WeatherError onRetry={refetch} />;
+  if (isError && !weatherData) return <WeatherError onRetry={refetch} />;
 
   return (
     <View style={styles.container}>
