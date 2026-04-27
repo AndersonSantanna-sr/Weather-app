@@ -8,6 +8,7 @@ interface SearchState {
   recentSearches: SearchLocation[];
   setSelectedQuery: (query: string | null) => void;
   addRecentSearch: (location: SearchLocation) => void;
+  removeRecentSearch: (id: number) => void;
   clearRecentSearches: () => void;
 }
 
@@ -22,6 +23,8 @@ export const useSearchStore = create<SearchState>()(
           const filtered = state.recentSearches.filter((r) => r.id !== location.id);
           return { recentSearches: [location, ...filtered].slice(0, 5) };
         }),
+      removeRecentSearch: (id) =>
+        set((state) => ({ recentSearches: state.recentSearches.filter((r) => r.id !== id) })),
       clearRecentSearches: () => set({ recentSearches: [] }),
     }),
     {
