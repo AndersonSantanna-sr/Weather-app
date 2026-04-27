@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React, { type FC, useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text } from 'react-native';
 
 type Props = {
@@ -13,12 +12,23 @@ const Toast: FC<Props> = ({ message, visible, onHide }) => {
 
   useEffect(() => {
     if (!visible) return;
-    Animated.sequence([
+
+    opacity.setValue(0);
+
+    const animation = Animated.sequence([
       Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }),
       Animated.delay(3000),
       Animated.timing(opacity, { toValue: 0, duration: 300, useNativeDriver: true }),
-    ]).start(() => onHide());
-  }, [visible]);
+    ]);
+
+    animation.start(({ finished }) => {
+      if (finished) onHide();
+    });
+
+    return () => {
+      animation.stop();
+    };
+  }, [visible, opacity, onHide]);
 
   if (!visible) return null;
 
@@ -29,13 +39,15 @@ const Toast: FC<Props> = ({ message, visible, onHide }) => {
   );
 };
 
+const ERROR_BG = 'rgba(229, 57, 53, 0.92)';
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 60,
     left: 16,
     right: 16,
-    backgroundColor: 'rgba(229, 57, 53, 0.92)',
+    backgroundColor: ERROR_BG,
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 16,
