@@ -1,4 +1,5 @@
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useSettings } from '@/shared/store/useSettings';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { formatHour } from '@/shared/utils/dateHelpers';
 import React, { type FC } from 'react';
@@ -15,6 +16,7 @@ const SectionTime: FC<Props> = ({ data }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const { subtextColor } = useWeatherThemeStore((state) => state);
+  const timeFormat = useSettings((state) => state.timeFormat);
 
   return (
     <View style={styles.container}>
@@ -33,7 +35,7 @@ const SectionTime: FC<Props> = ({ data }) => {
             temperature={Number(item.temp_c.toFixed(0))}
             iconCode={item.condition.code}
             isDay={Boolean(item.is_day)}
-            time={formatHour(item.time)}
+            time={formatHour(item.time, timeFormat)}
           />
         )}
       />
