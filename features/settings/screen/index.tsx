@@ -54,39 +54,45 @@ const Settings: FC = () => {
         locations={[0, 1]}
         style={[StyleSheet.absoluteFill]}
       />
-      <ItemSettings
-        title="Temperature Unit"
-        icon={<MaterialCommunityIcons name="weather-sunny" size={24} color="black" />}
-        input={
-          <SelectOption
-            value={temperatureUnit}
-            options={temperatureUnitOptions}
-            onSelect={handleSelectTemperatureUnit}
-          />
-        }
-      />
-      <ItemSettings
-        title="Wind Speed Unit"
-        icon={<MaterialCommunityIcons name="weather-windy" size={24} color="black" />}
-        input={
-          <SelectOption
-            value={windSpeedUnit}
-            options={windSpeedUnitOptions}
-            onSelect={handleSelectWindSpeedUnit}
-          />
-        }
-      />
-      <ItemSettings
-        title="Time Format"
-        icon={<MaterialCommunityIcons name="clock-outline" size={24} color="black" />}
-        input={
-          <SelectOption
-            value={timeFormat}
-            options={timeFormatOptions}
-            onSelect={handleSelectTimeFormat}
-          />
-        }
-      />
+      <View style={{ zIndex: 3 }}>
+        <ItemSettings
+          title="Temperature Unit"
+          icon={<MaterialCommunityIcons name="weather-sunny" size={24} color="black" />}
+          input={
+            <SelectOption
+              value={temperatureUnit}
+              options={temperatureUnitOptions}
+              onSelect={handleSelectTemperatureUnit}
+            />
+          }
+        />
+      </View>
+      <View style={{ zIndex: 2 }}>
+        <ItemSettings
+          title="Wind Speed Unit"
+          icon={<MaterialCommunityIcons name="weather-windy" size={24} color="black" />}
+          input={
+            <SelectOption
+              value={windSpeedUnit}
+              options={windSpeedUnitOptions}
+              onSelect={handleSelectWindSpeedUnit}
+            />
+          }
+        />
+      </View>
+      <View style={{ zIndex: 1 }}>
+        <ItemSettings
+          title="Time Format"
+          icon={<MaterialCommunityIcons name="clock-outline" size={24} color="black" />}
+          input={
+            <SelectOption
+              value={timeFormat}
+              options={timeFormatOptions}
+              onSelect={handleSelectTimeFormat}
+            />
+          }
+        />
+      </View>
     </View>
   );
 };
