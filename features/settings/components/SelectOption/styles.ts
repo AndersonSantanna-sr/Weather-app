@@ -12,7 +12,9 @@ export const createStyles = (theme: AppTheme) =>
       justifyContent: 'space-between',
       backgroundColor: theme.colors.background.primary,
       borderRadius: theme.borderRadius.sm,
-      padding: theme.spacing.sm,
+      paddingVertical: theme.spacing.sm,
+      paddingLeft: theme.spacing.sm,
+      paddingRight: theme.spacing.md,
       width: '100%',
     },
     label: {
