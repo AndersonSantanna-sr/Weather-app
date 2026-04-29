@@ -2,7 +2,7 @@ import { TemperatureUnit, WindSpeedUnit } from '../types/units';
 
 export const getTemperatureUnitLabel = (temperature: number, unit: TemperatureUnit): string => {
   if (unit === TemperatureUnit.CELSIUS) return String(temperature.toFixed(0)).concat('°C');
-  return String((temperature * 9) / 5 + 32).concat('°F');
+  return `${((temperature * 9) / 5 + 32).toFixed(0)}°F`;
 };
 
 export const formatWindSpeed = (kph: number, unit: WindSpeedUnit): string => {

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { queryClient } from '@/config/query/queryClient';
-import { useSettings } from '@/shared/store/useSettings';
+import { useThemeStore } from '@/shared/store/useThemeStore';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 export { ErrorBoundary } from 'expo-router';
@@ -45,7 +45,7 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const { theme } = useSettings();
+  const theme = useThemeStore((state) => state.theme);
 
   return (
     <QueryClientProvider client={queryClient}>
