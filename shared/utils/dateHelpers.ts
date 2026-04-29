@@ -1,4 +1,5 @@
 import { type WeatherHour } from '@/features/weather/types/weather';
+import { TimeFormat } from '../types/units';
 
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -14,8 +15,15 @@ export const formatDate = (date: string): string => {
   return `${MONTHS[month - 1]}, ${day}`;
 };
 
-export const formatHour = (datetime: string): string => {
-  return datetime.split(' ')[1];
+export const formatHour = (datetime: string, format: TimeFormat = TimeFormat.H24): string => {
+  const time = datetime.split(' ')[1];
+  if (format === TimeFormat.H12) {
+    const [h, m] = time.split(':').map(Number);
+    const period = h >= 12 ? 'PM' : 'AM';
+    const hour = h % 12 || 12;
+    return `${hour}:${String(m).padStart(2, '0')} ${period}`;
+  }
+  return time;
 };
 
 export const getNextHours = (
