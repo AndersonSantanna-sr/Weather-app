@@ -16,8 +16,10 @@ export const createStyles = (theme: AppTheme) =>
       width: '100%',
     },
     label: {
+      flex: 1,
       fontSize: theme.typography.fontSize.md,
       color: theme.colors.text.primary,
+      marginRight: theme.spacing.xs,
     },
     // Dropdown Styles
     dropdown: {
