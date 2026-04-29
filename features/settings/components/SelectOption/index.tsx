@@ -39,7 +39,9 @@ const SelectOption = <T,>({
         style={[styles.container, contentStyle]}
         onPress={() => setDropdownOpen(!dropdownOpen)}
       >
-        <Text style={styles.label}>{selected?.label}</Text>
+        <Text style={styles.label} numberOfLines={1} adjustsFontSizeToFit>
+          {selected?.label}
+        </Text>
         <Entypo
           name={dropdownOpen ? 'chevron-small-up' : 'chevron-small-down'}
           size={24}
