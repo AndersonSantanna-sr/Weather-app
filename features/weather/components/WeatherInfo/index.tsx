@@ -3,7 +3,7 @@ import Icon from '@/shared/components/Icon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useSettings } from '@/shared/store/useSettings';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
-import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
+import { formatWindSpeed, getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 import type { FC } from 'react';
 import React from 'react';
 import { Text, View } from 'react-native';
@@ -18,6 +18,7 @@ const WeatherInfo: FC<Props> = ({ weatherCurrent }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const temperatureUnit = useSettings((state) => state.temperatureUnit);
+  const windSpeedUnit = useSettings((state) => state.windSpeedUnit);
   const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
 
   return (
@@ -25,7 +26,9 @@ const WeatherInfo: FC<Props> = ({ weatherCurrent }) => {
       <View style={styles.contentContainer}>
         <Icon source={WindJson} />
         <Text style={[styles.subtitle, { color: subtextColor }]}>Wind now</Text>
-        <Text style={[styles.valueText, { color: textColor }]}>{weatherCurrent?.wind_kph} km</Text>
+        <Text style={[styles.valueText, { color: textColor }]}>
+          {formatWindSpeed(weatherCurrent?.wind_kph ?? 0, windSpeedUnit)}
+        </Text>
       </View>
       <View style={styles.contentContainer}>
         <Icon source={ThermometerJson} />
