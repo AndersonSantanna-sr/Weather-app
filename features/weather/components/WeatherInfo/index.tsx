@@ -19,7 +19,8 @@ const WeatherInfo: FC<Props> = ({ weatherCurrent }) => {
   const styles = createStyles(theme);
   const temperatureUnit = useSettings((state) => state.temperatureUnit);
   const windSpeedUnit = useSettings((state) => state.windSpeedUnit);
-  const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
+  const textColor = useWeatherThemeStore((state) => state.textColor);
+  const subtextColor = useWeatherThemeStore((state) => state.subtextColor);
 
   return (
     <View style={styles.container}>

@@ -15,7 +15,7 @@ type Props = {
 const SectionTime: FC<Props> = ({ data }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const { subtextColor } = useWeatherThemeStore((state) => state);
+  const subtextColor = useWeatherThemeStore((state) => state.subtextColor);
   const timeFormat = useSettings((state) => state.timeFormat);
 
   return (

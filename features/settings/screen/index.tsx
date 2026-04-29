@@ -1,43 +1,52 @@
 import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useSettings } from '@/shared/store/useSettings';
-import { TemperatureUnit } from '@/shared/types/units';
+import { TemperatureUnit, TimeFormat, WindSpeedUnit } from '@/shared/types/units';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { FC } from 'react';
 import React, { useMemo } from 'react';
-import { StyleSheet, Switch, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import ItemSettings from '../components/ItemSettings';
 import type { Options } from '../components/SelectOption';
 import SelectOption from '../components/SelectOption';
 import { createStyles } from './styles';
-
-type Props = {};
 
 const temperatureUnitOptions = [
   { value: TemperatureUnit.CELSIUS, label: 'Celsius (°C)' },
   { value: TemperatureUnit.FAHRENHEIT, label: 'Fahrenheit (°F)' },
 ];
 
-const Settings: FC<Props> = () => {
+const windSpeedUnitOptions = [
+  { value: WindSpeedUnit.KPH, label: 'km/h' },
+  { value: WindSpeedUnit.MPH, label: 'mph' },
+  { value: WindSpeedUnit.MS,  label: 'm/s' },
+];
+
+const timeFormatOptions = [
+  { value: TimeFormat.H24, label: '24 hours' },
+  { value: TimeFormat.H12, label: '12 hours (AM/PM)' },
+];
+
+const Settings: FC = () => {
   const appTheme = useAppTheme();
   const styles = useMemo(() => createStyles(appTheme), [appTheme]);
-  const { theme, temperatureUnit, locationServicesEnabled, setTemperatureUnit } = useSettings();
-  const weatherCondition = WeatherCondition.DRIZZLE;
-  const gradient = WEATHER_GRADIENTS[weatherCondition];
-  const handleSelectTemperatureUnit = (option: Options<TemperatureUnit>) => {
-    setTemperatureUnit(option.value);
-  };
+  const {
+    temperatureUnit,
+    windSpeedUnit,
+    timeFormat,
+    setTemperatureUnit,
+    setWindSpeedUnit,
+    setTimeFormat,
+  } = useSettings();
+  const gradient = WEATHER_GRADIENTS[WeatherCondition.DRIZZLE];
 
-  const renderSelectTemperatureUnit = () => {
-    return (
-      <SelectOption
-        value={temperatureUnit}
-        options={temperatureUnitOptions}
-        onSelect={handleSelectTemperatureUnit}
-      />
-    );
-  };
+  const handleSelectTemperatureUnit = (option: Options<TemperatureUnit>) =>
+    setTemperatureUnit(option.value);
+  const handleSelectWindSpeedUnit = (option: Options<WindSpeedUnit>) =>
+    setWindSpeedUnit(option.value);
+  const handleSelectTimeFormat = (option: Options<TimeFormat>) => setTimeFormat(option.value);
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -48,13 +57,35 @@ const Settings: FC<Props> = () => {
       <ItemSettings
         title="Temperature Unit"
         icon={<MaterialCommunityIcons name="weather-sunny" size={24} color="black" />}
-        input={renderSelectTemperatureUnit()}
+        input={
+          <SelectOption
+            value={temperatureUnit}
+            options={temperatureUnitOptions}
+            onSelect={handleSelectTemperatureUnit}
+          />
+        }
       />
       <ItemSettings
-        title="Location Services"
-        description={locationServicesEnabled ? 'Enabled' : 'Disabled'}
-        icon={<MaterialCommunityIcons name="map-marker-radius" size={24} color="black" />}
-        input={<Switch />}
+        title="Wind Speed Unit"
+        icon={<MaterialCommunityIcons name="weather-windy" size={24} color="black" />}
+        input={
+          <SelectOption
+            value={windSpeedUnit}
+            options={windSpeedUnitOptions}
+            onSelect={handleSelectWindSpeedUnit}
+          />
+        }
+      />
+      <ItemSettings
+        title="Time Format"
+        icon={<MaterialCommunityIcons name="clock-outline" size={24} color="black" />}
+        input={
+          <SelectOption
+            value={timeFormat}
+            options={timeFormatOptions}
+            onSelect={handleSelectTimeFormat}
+          />
+        }
       />
     </View>
   );
