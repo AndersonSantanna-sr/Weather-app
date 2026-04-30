@@ -51,7 +51,15 @@ export default function TabOneScreen() {
       temperatureAlertThreshold,
       temperatureUnit,
     });
-  }, [weatherData?.location.name]);
+  }, [
+    weatherData,
+    rainAlertEnabled,
+    rainAlertThreshold,
+    dailySummaryEnabled,
+    temperatureAlertEnabled,
+    temperatureAlertThreshold,
+    temperatureUnit,
+  ]);
 
   if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
 

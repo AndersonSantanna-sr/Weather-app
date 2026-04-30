@@ -25,10 +25,10 @@ export async function scheduleWeatherNotifications(
     temperatureUnit,
   } = settings;
 
-  if (!rainAlertEnabled && !dailySummaryEnabled && !temperatureAlertEnabled) return;
-
   try {
     await Notifications.cancelAllScheduledNotificationsAsync();
+
+    if (!rainAlertEnabled && !dailySummaryEnabled && !temperatureAlertEnabled) return;
 
     const city = weatherData.location.name;
     const now = new Date();
