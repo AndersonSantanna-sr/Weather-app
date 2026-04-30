@@ -1,7 +1,7 @@
 import type { WeatherData } from '@/features/weather/types/weather';
+import type * as NotificationsType from 'expo-notifications';
 import { TemperatureUnit } from '@/shared/types/units';
 import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
-import * as Notifications from 'expo-notifications';
 
 export type NotificationSettings = {
   rainAlertEnabled: boolean;
@@ -26,6 +26,8 @@ export async function scheduleWeatherNotifications(
   } = settings;
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const Notifications = require('expo-notifications') as typeof NotificationsType;
     await Notifications.cancelAllScheduledNotificationsAsync();
 
     if (!rainAlertEnabled && !dailySummaryEnabled && !temperatureAlertEnabled) return;

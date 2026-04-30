@@ -1,7 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import * as Notifications from 'expo-notifications';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -19,15 +18,20 @@ export const unstable_settings = {
 if (__DEV__) {
   require('../config/reactotron');
 }
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+try {
+  const Notifications = require('expo-notifications');
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+} catch {
+  // expo-notifications native module not available (Expo Go)
+}
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -59,7 +63,12 @@ function RootLayoutNav() {
   const theme = useThemeStore((state) => state.theme);
 
   useEffect(() => {
-    Notifications.requestPermissionsAsync();
+    try {
+      const Notifications = require('expo-notifications');
+      Notifications.requestPermissionsAsync();
+    } catch {
+      // expo-notifications native module not available
+    }
   }, []);
 
   return (
