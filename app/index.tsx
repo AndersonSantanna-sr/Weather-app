@@ -11,10 +11,13 @@ import { useForecast } from '@/features/weather/hooks/useForecast';
 import { useUserLocation } from '@/features/weather/hooks/useUserLocation';
 import { WEATHER_GRADIENTS } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useSettings } from '@/shared/store/useSettings';
 import { getNextHours } from '@/shared/utils/dateHelpers';
 import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
+import { scheduleWeatherNotifications } from '@/shared/utils/notificationHelpers';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useEffect } from 'react';
 import { ActivityIndicator, Modal, ScrollView, StyleSheet, View } from 'react-native';
 import { createStyles } from './styles';
 
@@ -30,6 +33,26 @@ export default function TabOneScreen() {
   const gradient = WEATHER_GRADIENTS[weatherCondition];
   const theme = useAppTheme();
   const styles = createStyles(theme);
+
+  const rainAlertEnabled = useSettings((s) => s.rainAlertEnabled);
+  const rainAlertThreshold = useSettings((s) => s.rainAlertThreshold);
+  const dailySummaryEnabled = useSettings((s) => s.dailySummaryEnabled);
+  const temperatureAlertEnabled = useSettings((s) => s.temperatureAlertEnabled);
+  const temperatureAlertThreshold = useSettings((s) => s.temperatureAlertThreshold);
+  const temperatureUnit = useSettings((s) => s.temperatureUnit);
+
+  useEffect(() => {
+    if (!weatherData) return;
+    scheduleWeatherNotifications(weatherData, {
+      rainAlertEnabled,
+      rainAlertThreshold,
+      dailySummaryEnabled,
+      temperatureAlertEnabled,
+      temperatureAlertThreshold,
+      temperatureUnit,
+    });
+  }, [weatherData?.location.name]);
+
   if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
 
   if (!activeQuery) {
