@@ -15,6 +15,7 @@ import { useSettings } from '@/shared/store/useSettings';
 import { getNextHours } from '@/shared/utils/dateHelpers';
 import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
 import { scheduleWeatherNotifications } from '@/shared/utils/notificationHelpers';
+import DevNotificationTest from '@/shared/components/DevNotificationTest';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect } from 'react';
@@ -98,6 +99,7 @@ export default function TabOneScreen() {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       </Modal>
+      {__DEV__ && <DevNotificationTest />}
     </View>
   );
 }
