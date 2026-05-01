@@ -10,7 +10,11 @@ const DevNotificationTest: React.FC = () => {
           title: '[DEV] Alerta de chuva',
           body: 'Chuva prevista em São Paulo. Probabilidade: 70%',
         },
-        trigger: { seconds: 2 },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+          seconds: 2,
+          repeats: false,
+        },
       });
       Alert.alert('Dev', 'Notificação agendada para 2 segundos.');
     } catch (e) {
