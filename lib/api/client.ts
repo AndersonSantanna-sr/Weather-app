@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://api.weatherapi.com/v1',
+  baseURL: 'https://api.weatherapi.com/v1',
   timeout: 10000,
 });
