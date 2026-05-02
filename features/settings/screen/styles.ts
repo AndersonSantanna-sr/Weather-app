@@ -28,4 +28,13 @@ export const createStyles = (theme: AppTheme) => ({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+  sectionTitle: {
+    fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.text.secondary,
+    fontWeight: '600' as const,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.xs,
+    paddingHorizontal: theme.spacing.sm,
+    textTransform: 'uppercase' as const,
+  },
 });

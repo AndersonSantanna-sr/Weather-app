@@ -18,6 +18,21 @@ export const unstable_settings = {
 if (__DEV__) {
   require('../config/reactotron');
 }
+try {
+  const Notifications = require('expo-notifications');
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+} catch {
+  // expo-notifications native module not available (Expo Go)
+}
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -46,6 +61,15 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    try {
+      const Notifications = require('expo-notifications');
+      Notifications.requestPermissionsAsync();
+    } catch {
+      // expo-notifications native module not available
+    }
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
