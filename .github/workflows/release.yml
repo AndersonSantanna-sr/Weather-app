@@ -25,7 +25,12 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build APK
-        run: eas build --platform android --profile release --non-interactive --output ./release.apk
+        run: eas build --platform android --profile release --non-interactive
+
+      - name: Download APK
+        run: |
+          DOWNLOAD_URL=$(eas build:list --platform android --profile release --limit 1 --json --non-interactive | jq -r '.[0].artifacts.buildUrl')
+          curl -L "$DOWNLOAD_URL" -o release.apk
 
       - name: Get version
         id: version
@@ -35,7 +40,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: "Latest Release (v${{ steps.version.outputs.version }})"
+          name: 'Latest Release (v${{ steps.version.outputs.version }})'
           body: |
             **Version:** ${{ steps.version.outputs.version }}
             **Built:** ${{ github.event.head_commit.timestamp }}
