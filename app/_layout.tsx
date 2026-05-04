@@ -2,8 +2,9 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
+import AnimatedSplash from './components/AnimatedSplash';
 
 import { queryClient } from '@/config/query/queryClient';
 import { useThemeStore } from '@/shared/store/useThemeStore';
@@ -40,8 +41,8 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const [splashDone, setSplashDone] = useState(false);
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -56,7 +57,12 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <>
+      <RootLayoutNav />
+      {!splashDone && <AnimatedSplash onDone={() => setSplashDone(true)} />}
+    </>
+  );
 }
 
 function RootLayoutNav() {
