@@ -1,0 +1,102 @@
+import If from '@/shared/components/If';
+import Toast from '@/shared/components/Toast';
+import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { FontAwesome } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+import { useRouter } from 'expo-router';
+import type { FC } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useSearch } from '../../hooks/useSearch';
+import { useSearchStore } from '../../stores/useSearchStore';
+import { createStyles } from './styles';
+
+const Autocomplete: FC = () => {
+  const theme = useAppTheme();
+  const styles = createStyles(theme);
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [toastVisible, setToastVisible] = useState(false);
+  const { data: results = [], isFetching, isError, error } = useSearch(debouncedQuery);
+  const { addRecentSearch, setSelectedQuery } = useSearchStore();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedQuery(inputValue), 400);
+    return () => clearTimeout(timer);
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (isError && error) {
+      setToastVisible(false);
+      const id = setTimeout(() => setToastVisible(true), 0);
+      return () => clearTimeout(id);
+    }
+  }, [isError, error]);
+
+  const handleHideToast = useCallback(() => setToastVisible(false), []);
+
+  const handleSelect = (location: (typeof results)[number]) => {
+    addRecentSearch({ ...location, searchedAt: Date.now() });
+    setSelectedQuery(`${location.lat},${location.lon}`);
+    Keyboard.dismiss();
+    router.back();
+  };
+
+  return (
+    <>
+      <Toast
+        message="Erro ao buscar cidades. Tente novamente."
+        visible={toastVisible}
+        onHide={handleHideToast}
+      />
+      <BlurView intensity={40} tint="light">
+        <View style={styles.inputContainer}>
+          <View style={styles.iconContainer}>
+            <FontAwesome name="search" size={18} color={theme.colors.text.secondary} />
+          </View>
+          <TextInput
+            value={inputValue}
+            onChangeText={setInputValue}
+            placeholder="Search"
+            style={styles.input}
+            autoFocus
+            autoCorrect={false}
+            autoCapitalize="none"
+            accessibilityLabel="Search for a location"
+          />
+          <If condition={isFetching && debouncedQuery.length >= 3}>
+            <ActivityIndicator
+              size="small"
+              color={theme.colors.text.secondary}
+              style={styles.activityIndicator}
+            />
+          </If>
+        </View>
+        <If condition={!!debouncedQuery.length && results.length > 0}>
+          <View
+            style={styles.optionContainer}
+            accessibilityRole="list"
+            accessibilityLabel="Search results"
+          >
+            {results.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.optionItem}
+                onPress={() => handleSelect(item)}
+                accessibilityRole="button"
+                accessibilityLabel={`Select ${item.name}, ${item.region}, ${item.country}`}
+              >
+                <Text style={styles.optionText}>
+                  {item.name}, {item.region}, {item.country}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </If>
+      </BlurView>
+    </>
+  );
+};
+
+export default Autocomplete;

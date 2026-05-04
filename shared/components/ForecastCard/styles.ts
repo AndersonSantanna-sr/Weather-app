@@ -5,9 +5,7 @@ export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       padding: theme.spacing.md,
-      // borderWidth: 1,
       borderColor: theme.colors.border.default,
-      borderRadius: theme.borderRadius.md,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -26,7 +24,6 @@ export const createStyles = (theme: AppTheme) =>
       marginTop: theme.spacing.xs,
     },
     temperatureText: {
-      flex: 0.3,
       fontSize: theme.typography.fontSize.lg,
       fontWeight: theme.typography.fontWeight.bold,
     },
@@ -34,5 +31,6 @@ export const createStyles = (theme: AppTheme) =>
       flex: 0.35,
       flexDirection: 'column',
       alignItems: 'flex-end',
+      justifyContent: 'center',
     },
   });

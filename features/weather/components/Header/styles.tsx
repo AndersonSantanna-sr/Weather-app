@@ -24,6 +24,7 @@ export const createStyles = (theme: AppTheme) =>
     },
     menuContainer: {
       flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'space-between',
       width: '100%',
       paddingHorizontal: theme.spacing.md,

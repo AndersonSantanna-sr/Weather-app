@@ -1,58 +1,50 @@
+import { zustandStorage } from '@/lib/storage/storage';
 import { create } from 'zustand';
-import { TemperatureUnit } from '../types/units';
-
-type Theme = 'light' | 'dark';
+import { persist } from 'zustand/middleware';
+import { TemperatureUnit, TimeFormat, WindSpeedUnit } from '../types/units';
 
 interface SettingsStore {
-  theme?: Theme;
   temperatureUnit: TemperatureUnit;
-  locationServicesEnabled: boolean;
-  hasHydrated: boolean;
-  toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  windSpeedUnit: WindSpeedUnit;
+  timeFormat: TimeFormat;
+  rainAlertEnabled: boolean;
+  rainAlertThreshold: number;
+  dailySummaryEnabled: boolean;
+  temperatureAlertEnabled: boolean;
+  temperatureAlertThreshold: number;
   setTemperatureUnit: (unit: TemperatureUnit) => void;
-  setLocationServicesEnabled: (enabled: boolean) => void;
-  setHasHydrated: (value: boolean) => void;
+  setWindSpeedUnit: (unit: WindSpeedUnit) => void;
+  setTimeFormat: (format: TimeFormat) => void;
+  setRainAlertEnabled: (v: boolean) => void;
+  setRainAlertThreshold: (v: number) => void;
+  setDailySummaryEnabled: (v: boolean) => void;
+  setTemperatureAlertEnabled: (v: boolean) => void;
+  setTemperatureAlertThreshold: (v: number) => void;
 }
 
 export const useSettings = create<SettingsStore>()(
-  // persist(
-  //   (set, get) => ({
-  //     theme: get()?.theme || 'light',
-  //     temperatureUnit: TemperatureUnit.CELSIUS,
-  //     locationServicesEnabled: false,
-  //     toggleTheme: () => {
-  //       const currentTheme = get().theme;
-  //       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  //       set({ theme: newTheme });
-  //     },
-  //     setTheme: (theme: Theme) => set({ theme }),
-  //     setTemperatureUnit: (unit: TemperatureUnit) => set({ temperatureUnit: unit }),
-  //     setLocationServicesEnabled: (enabled: boolean) => set({ locationServicesEnabled: enabled }),
-  //     setHasHydrated: (value: boolean) => set({ hasHydrated: value }),
-  //     hasHydrated: false,
-  //   }),
-  //   {
-  //     name: 'settings',
-  //     storage: zustandStorage,
-  //     onRehydrateStorage: () => (state) => {
-  //       state?.setHasHydrated(true);
-  //     },
-  //   }
-  // )
-  (set, get) => ({
-    theme: get()?.theme || 'light',
-    temperatureUnit: TemperatureUnit.CELSIUS,
-    locationServicesEnabled: false,
-    toggleTheme: () => {
-      const currentTheme = get().theme;
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      set({ theme: newTheme });
-    },
-    setTheme: (theme: Theme) => set({ theme }),
-    setTemperatureUnit: (unit: TemperatureUnit) => set({ temperatureUnit: unit }),
-    setLocationServicesEnabled: (enabled: boolean) => set({ locationServicesEnabled: enabled }),
-    setHasHydrated: (value: boolean) => set({ hasHydrated: value }),
-    hasHydrated: false,
-  })
+  persist(
+    (set) => ({
+      temperatureUnit: TemperatureUnit.CELSIUS,
+      windSpeedUnit: WindSpeedUnit.KPH,
+      timeFormat: TimeFormat.H24,
+      rainAlertEnabled: false,
+      rainAlertThreshold: 50,
+      dailySummaryEnabled: false,
+      temperatureAlertEnabled: false,
+      temperatureAlertThreshold: 35,
+      setTemperatureUnit: (unit) => set({ temperatureUnit: unit }),
+      setWindSpeedUnit: (unit) => set({ windSpeedUnit: unit }),
+      setTimeFormat: (format) => set({ timeFormat: format }),
+      setRainAlertEnabled: (v) => set({ rainAlertEnabled: v }),
+      setRainAlertThreshold: (v) => set({ rainAlertThreshold: v }),
+      setDailySummaryEnabled: (v) => set({ dailySummaryEnabled: v }),
+      setTemperatureAlertEnabled: (v) => set({ temperatureAlertEnabled: v }),
+      setTemperatureAlertThreshold: (v) => set({ temperatureAlertThreshold: v }),
+    }),
+    {
+      name: 'settings',
+      storage: zustandStorage,
+    }
+  )
 );

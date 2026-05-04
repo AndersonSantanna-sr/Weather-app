@@ -15,7 +15,7 @@ export const createStyles = (theme: AppTheme) =>
       marginTop: theme.spacing.sm,
     },
     valueText: {
-      fontSize: theme.typography.fontSize.lg,
+      fontSize: theme.typography.fontSize.sm,
       fontWeight: theme.typography.fontWeight.bold,
     },
   });

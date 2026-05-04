@@ -4,10 +4,20 @@ import { StyleSheet } from 'react-native';
 export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     loadingContainer: {
-      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    gpsLoadingContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#1a1a2e',
     },
     container: {
       flex: 1,
@@ -18,15 +28,12 @@ export const createStyles = (theme: AppTheme) =>
       position: 'absolute',
       bottom: 0,
       height: '70%',
-      width: '97%',
+      width: '100%',
       alignSelf: 'center',
       borderTopLeftRadius: theme.borderRadius.lg,
       borderTopRightRadius: theme.borderRadius.lg,
       overflow: 'hidden',
       paddingTop: theme.spacing.lg,
-      borderWidth: 1,
-      borderColor: theme.colors.border.subtle,
-      elevation: 5,
     },
     title: {
       fontSize: 20,
