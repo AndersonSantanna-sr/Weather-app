@@ -6,7 +6,7 @@ export enum TemperatureUnit {
 export enum WindSpeedUnit {
   KPH = 'kph',
   MPH = 'mph',
-  MS  = 'ms',
+  MS = 'ms',
 }
 
 export enum TimeFormat {

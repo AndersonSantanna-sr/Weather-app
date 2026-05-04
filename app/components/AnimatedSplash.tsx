@@ -1,21 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
-import Svg, {
-  Circle,
-  ClipPath,
-  Defs,
-  Ellipse,
-  G,
-  Line,
-  LinearGradient,
-  RadialGradient,
-  Rect,
-  Stop,
-} from 'react-native-svg';
+import Svg, { Circle, Defs, Ellipse, Line, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
 
-// Classic variant tokens
+// Classic variant
 const C = {
   tileBg1: '#84CDFB',
   tileBg2: '#2A9DEC',
@@ -28,7 +17,9 @@ const C = {
 };
 
 // Sun geometry (200×200 viewBox)
-const SUN_CX = 78, SUN_CY = 78, SUN_R = 30;
+const SUN_CX = 78,
+  SUN_CY = 78,
+  SUN_R = 30;
 
 function buildRays() {
   const rays: { x1: number; y1: number; x2: number; y2: number }[] = [];
@@ -48,7 +39,6 @@ function buildRays() {
 
 const RAYS = buildRays();
 const ICON_SIZE = Math.min(SCREEN_W * 0.55, 240);
-const SCALE = ICON_SIZE / 200;
 
 interface Props {
   onDone: () => void;
@@ -56,35 +46,43 @@ interface Props {
 
 export default function AnimatedSplash({ onDone }: Props) {
   // Animation values
-  const bgOpacity    = useRef(new Animated.Value(0)).current;
-  const cloudX       = useRef(new Animated.Value(-SCREEN_W)).current;
-  const sunScale     = useRef(new Animated.Value(0.3)).current;
-  const sunOpacity   = useRef(new Animated.Value(0)).current;
-  const wordOpacity  = useRef(new Animated.Value(0)).current;
-  const wordY        = useRef(new Animated.Value(14)).current;
-  const barOpacity   = useRef(new Animated.Value(0)).current;
-  const barSlide     = useRef(new Animated.Value(-60)).current;
+  const bgOpacity = useRef(new Animated.Value(0)).current;
+  const cloudX = useRef(new Animated.Value(-SCREEN_W)).current;
+  const sunScale = useRef(new Animated.Value(0.3)).current;
+  const sunOpacity = useRef(new Animated.Value(0)).current;
+  const wordOpacity = useRef(new Animated.Value(0)).current;
+  const wordY = useRef(new Animated.Value(14)).current;
+  const barOpacity = useRef(new Animated.Value(0)).current;
+  const barSlide = useRef(new Animated.Value(-60)).current;
 
   useEffect(() => {
     Animated.sequence([
       // 1. Sky fade in
       Animated.timing(bgOpacity, {
-        toValue: 1, duration: 400, useNativeDriver: true,
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
       }),
       // 2. Cloud drifts in + sun pops (parallel)
       Animated.parallel([
         Animated.timing(cloudX, {
-          toValue: 0, duration: 700,
+          toValue: 0,
+          duration: 700,
           useNativeDriver: true,
         }),
         Animated.sequence([
           Animated.delay(200),
           Animated.parallel([
             Animated.spring(sunScale, {
-              toValue: 1, friction: 5, tension: 80, useNativeDriver: true,
+              toValue: 1,
+              friction: 5,
+              tension: 80,
+              useNativeDriver: true,
             }),
             Animated.timing(sunOpacity, {
-              toValue: 1, duration: 300, useNativeDriver: true,
+              toValue: 1,
+              duration: 300,
+              useNativeDriver: true,
             }),
           ]),
         ]),
@@ -92,21 +90,29 @@ export default function AnimatedSplash({ onDone }: Props) {
       // 3. Wordmark + loading bar fade up
       Animated.parallel([
         Animated.timing(wordOpacity, {
-          toValue: 1, duration: 500, useNativeDriver: true,
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: true,
         }),
         Animated.timing(wordY, {
-          toValue: 0, duration: 500, useNativeDriver: true,
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
         }),
         Animated.sequence([
           Animated.delay(100),
           Animated.timing(barOpacity, {
-            toValue: 1, duration: 300, useNativeDriver: true,
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
           }),
         ]),
       ]),
       // 4. Loading bar slides across
       Animated.timing(barSlide, {
-        toValue: 60, duration: 1200, useNativeDriver: true,
+        toValue: 60,
+        duration: 1200,
+        useNativeDriver: true,
       }),
       Animated.delay(200),
     ]).start(() => onDone());
@@ -131,21 +137,12 @@ export default function AnimatedSplash({ onDone }: Props) {
       {/* Hero icon */}
       <View style={styles.iconWrapper}>
         {/* Cloud layer — translates in from left */}
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFill,
-            { transform: [{ translateX: cloudX }] },
-          ]}
-        >
-          <Svg
-            width={ICON_SIZE}
-            height={ICON_SIZE}
-            viewBox="0 0 200 200"
-          >
+        <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ translateX: cloudX }] }]}>
+          <Svg width={ICON_SIZE} height={ICON_SIZE} viewBox="0 0 200 200">
             {/* cloud shadow */}
             <Ellipse cx="118" cy="148" rx="62" ry="10" fill="rgba(14,53,89,0.18)" />
             {/* cloud puffs */}
-            <Circle cx="78"  cy="120" r="22" fill={C.cloudShade} />
+            <Circle cx="78" cy="120" r="22" fill={C.cloudShade} />
             <Circle cx="105" cy="108" r="30" fill={C.cloud} />
             <Circle cx="138" cy="112" r="26" fill={C.cloud} />
             <Circle cx="160" cy="124" r="20" fill={C.cloud} />
@@ -164,16 +161,15 @@ export default function AnimatedSplash({ onDone }: Props) {
             },
           ]}
         >
-          <Svg
-            width={ICON_SIZE}
-            height={ICON_SIZE}
-            viewBox="0 0 200 200"
-          >
+          <Svg width={ICON_SIZE} height={ICON_SIZE} viewBox="0 0 200 200">
             {/* rays */}
             {RAYS.map((r, i) => (
               <Line
                 key={i}
-                x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2}
+                x1={r.x1}
+                y1={r.y1}
+                x2={r.x2}
+                y2={r.y2}
                 stroke={C.rays}
                 strokeWidth="8"
                 strokeLinecap="round"
@@ -182,12 +178,7 @@ export default function AnimatedSplash({ onDone }: Props) {
             ))}
             {/* sun body */}
             <Circle cx={SUN_CX} cy={SUN_CY} r={SUN_R} fill={C.sun} />
-            <Circle
-              cx={SUN_CX - 8} cy={SUN_CY - 8}
-              r={SUN_R * 0.55}
-              fill={C.sunHi}
-              opacity={0.7}
-            />
+            <Circle cx={SUN_CX - 8} cy={SUN_CY - 8} r={SUN_R * 0.55} fill={C.sunHi} opacity={0.7} />
           </Svg>
         </Animated.View>
       </View>
@@ -208,12 +199,7 @@ export default function AnimatedSplash({ onDone }: Props) {
 
       {/* Loading bar */}
       <Animated.View style={[styles.loadingTrack, { opacity: barOpacity }]}>
-        <Animated.View
-          style={[
-            styles.loadingBar,
-            { transform: [{ translateX: barSlide }] },
-          ]}
-        />
+        <Animated.View style={[styles.loadingBar, { transform: [{ translateX: barSlide }] }]} />
       </Animated.View>
     </View>
   );
