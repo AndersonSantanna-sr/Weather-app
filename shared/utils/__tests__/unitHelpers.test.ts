@@ -1,8 +1,5 @@
 import { TemperatureUnit, WindSpeedUnit } from '@/shared/types/units';
-import {
-  formatWindSpeed,
-  getTemperatureUnitLabel,
-} from '@/shared/utils/unitHelpers';
+import { formatWindSpeed, getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 
 describe('getTemperatureUnitLabel', () => {
   it('returns celsius label unchanged', () => {

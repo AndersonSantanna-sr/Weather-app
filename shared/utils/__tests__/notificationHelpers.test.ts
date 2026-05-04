@@ -73,10 +73,11 @@ describe('scheduleWeatherNotifications', () => {
   });
 
   it('does not schedule rain alert when chance < threshold', async () => {
-    await scheduleWeatherNotifications(
-      makeWeatherData({ daily_chance_of_rain: 30 }) as never,
-      { ...baseSettings, rainAlertEnabled: true, rainAlertThreshold: 50 }
-    );
+    await scheduleWeatherNotifications(makeWeatherData({ daily_chance_of_rain: 30 }) as never, {
+      ...baseSettings,
+      rainAlertEnabled: true,
+      rainAlertThreshold: 50,
+    });
     expect(mockSchedule).not.toHaveBeenCalled();
   });
 
@@ -91,10 +92,11 @@ describe('scheduleWeatherNotifications', () => {
   });
 
   it('does not schedule temperature alert when maxtemp_c < threshold', async () => {
-    await scheduleWeatherNotifications(
-      makeWeatherData({ maxtemp_c: 30 }) as never,
-      { ...baseSettings, temperatureAlertEnabled: true, temperatureAlertThreshold: 35 }
-    );
+    await scheduleWeatherNotifications(makeWeatherData({ maxtemp_c: 30 }) as never, {
+      ...baseSettings,
+      temperatureAlertEnabled: true,
+      temperatureAlertThreshold: 35,
+    });
     expect(mockSchedule).not.toHaveBeenCalled();
   });
 });

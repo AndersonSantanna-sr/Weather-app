@@ -1,6 +1,6 @@
 import type { WeatherData } from '@/features/weather/types/weather';
 import type * as NotificationsType from 'expo-notifications';
-import { TemperatureUnit } from '@/shared/types/units';
+import type { TemperatureUnit } from '@/shared/types/units';
 import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 
 export type NotificationSettings = {
@@ -26,7 +26,6 @@ export async function scheduleWeatherNotifications(
   } = settings;
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Notifications = require('expo-notifications') as typeof NotificationsType;
     await Notifications.cancelAllScheduledNotificationsAsync();
 
@@ -61,10 +60,7 @@ export async function scheduleWeatherNotifications(
       }
 
       if (trigger8am > now) {
-        if (
-          rainAlertEnabled &&
-          forecastday.day.daily_chance_of_rain >= rainAlertThreshold
-        ) {
+        if (rainAlertEnabled && forecastday.day.daily_chance_of_rain >= rainAlertThreshold) {
           await Notifications.scheduleNotificationAsync({
             content: {
               title: 'Alerta de chuva',
@@ -78,10 +74,7 @@ export async function scheduleWeatherNotifications(
         }
 
         // temperatureAlertThreshold is always stored in °C regardless of display unit
-        if (
-          temperatureAlertEnabled &&
-          forecastday.day.maxtemp_c >= temperatureAlertThreshold
-        ) {
+        if (temperatureAlertEnabled && forecastday.day.maxtemp_c >= temperatureAlertThreshold) {
           const maxTemp = getTemperatureUnitLabel(forecastday.day.maxtemp_c, temperatureUnit);
           await Notifications.scheduleNotificationAsync({
             content: {
