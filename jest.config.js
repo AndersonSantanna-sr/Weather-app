@@ -1,17 +1,33 @@
 module.exports = {
-  preset: 'jest-expo',
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
-  },
-  transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',
-  ],
-  testPathIgnorePatterns: ['/node_modules/', '/android/', '/ios/'],
-  collectCoverageFrom: [
-    'shared/utils/**/*.ts',
-    'shared/store/**/*.ts',
-    'features/weather/hooks/**/*.ts',
-    '!**/__tests__/**',
-    '!**/*.d.ts',
+  projects: [
+    {
+      displayName: 'unit',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/shared/**/__tests__/**/*.test.ts'],
+      moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/$1',
+      },
+      transform: {
+        '^.+\\.tsx?$': ['babel-jest', { presets: ['babel-preset-expo', '@babel/preset-typescript'] }],
+      },
+      collectCoverageFrom: [
+        'shared/utils/**/*.ts',
+        'shared/store/**/*.ts',
+        '!**/__tests__/**',
+        '!**/*.d.ts',
+      ],
+    },
+    {
+      displayName: 'e2e',
+      preset: 'jest-expo',
+      testMatch: ['<rootDir>/features/**/__tests__/**/*.test.ts'],
+      moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/$1',
+      },
+      transformIgnorePatterns: [
+        'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',
+      ],
+      testPathIgnorePatterns: ['/node_modules/', '/android/', '/ios/'],
+    },
   ],
 };
