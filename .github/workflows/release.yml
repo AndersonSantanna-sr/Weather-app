@@ -25,7 +25,12 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build APK
-        run: eas build --platform android --profile release --non-interactive --output ./release.apk
+        run: eas build --platform android --profile release --non-interactive
+
+      - name: Download APK
+        run: |
+          DOWNLOAD_URL=$(eas build:list --platform android --profile release --limit 1 --json --non-interactive | jq -r '.[0].artifacts.buildUrl')
+          curl -L "$DOWNLOAD_URL" -o release.apk
 
       - name: Get version
         id: version
