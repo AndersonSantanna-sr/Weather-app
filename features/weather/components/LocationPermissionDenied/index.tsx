@@ -18,18 +18,9 @@ const LocationPermissionDenied: FC<Props> = ({ onRetry }) => {
   const gradient = WEATHER_GRADIENTS[WeatherCondition.CLOUDY];
 
   return (
-    <LinearGradient
-      colors={gradient.colors}
-      locations={[0, 1]}
-      style={{ flex: 1 }}
-    >
+    <LinearGradient colors={gradient.colors} locations={[0, 1]} style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Ionicons
-          name="location-off"
-          size={80}
-          color="white"
-          style={styles.icon}
-        />
+        <Ionicons name="location-outline" size={80} color="white" style={styles.icon} />
         <Text style={styles.title}>Location access denied</Text>
         <Text style={styles.subtitle}>
           Enable location in settings or search for a city manually.

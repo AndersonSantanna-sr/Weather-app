@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build APK
+        run: eas build --platform android --profile release --non-interactive --output ./release.apk
+
+      - name: Get version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Create or update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Release (v${{ steps.version.outputs.version }})"
+          body: |
+            **Version:** ${{ steps.version.outputs.version }}
+            **Built:** ${{ github.event.head_commit.timestamp }}
+            **Commit:** ${{ github.sha }}
+
+            Download the APK below and install on any Android device (enable "Install from unknown sources").
+          files: release.apk
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

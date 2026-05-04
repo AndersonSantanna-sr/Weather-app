@@ -11,7 +11,11 @@
     "ios:postinstall": "cd ios && pod install && cd ..",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --passWithNoTests",
+    "prepare": "husky"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
@@ -52,6 +56,9 @@
   },
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
+    "@testing-library/jest-native": "^5.4.3",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.24",
     "@types/react": "~19.2.2",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
@@ -63,8 +70,18 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-native": "^5.0.0",
+    "husky": "^9.1.7",
+    "jest": "^30.3.0",
+    "jest-expo": "^55.0.16",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "private": true,
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
 }
