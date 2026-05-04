@@ -4,7 +4,7 @@ import Svg, { Circle, Defs, Ellipse, Line, LinearGradient, Rect, Stop } from 're
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
 
-// Classic variant tokens
+// Classic variant
 const C = {
   tileBg1: '#84CDFB',
   tileBg2: '#2A9DEC',
