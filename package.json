@@ -11,7 +11,10 @@
     "ios:postinstall": "cd ios && pod install && cd ..",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --passWithNoTests"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
