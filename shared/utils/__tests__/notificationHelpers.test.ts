@@ -69,7 +69,7 @@ describe('scheduleWeatherNotifications', () => {
       rainAlertThreshold: 50,
     });
     expect(mockSchedule).toHaveBeenCalledTimes(1);
-    expect(mockSchedule.mock.calls[0][0].content.title).toBe('Alerta de chuva');
+    expect(mockSchedule.mock.calls[0][0].content.title).toBe('Rain alert');
   });
 
   it('does not schedule rain alert when chance < threshold', async () => {
@@ -88,7 +88,7 @@ describe('scheduleWeatherNotifications', () => {
       temperatureAlertThreshold: 35,
     });
     expect(mockSchedule).toHaveBeenCalledTimes(1);
-    expect(mockSchedule.mock.calls[0][0].content.title).toBe('Alerta de temperatura');
+    expect(mockSchedule.mock.calls[0][0].content.title).toBe('Temperature alert');
   });
 
   it('does not schedule temperature alert when maxtemp_c < threshold', async () => {

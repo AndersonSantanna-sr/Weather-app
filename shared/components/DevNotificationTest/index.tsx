@@ -7,8 +7,8 @@ const DevNotificationTest: React.FC = () => {
       const Notifications = require('expo-notifications');
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: '[DEV] Alerta de chuva',
-          body: 'Chuva prevista em São Paulo. Probabilidade: 70%',
+          title: '[DEV] Rain alert',
+          body: 'Rain expected in São Paulo. Chance: 70%',
         },
         trigger: {
           type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
@@ -16,9 +16,9 @@ const DevNotificationTest: React.FC = () => {
           repeats: false,
         },
       });
-      Alert.alert('Dev', 'Notificação agendada para 2 segundos.');
+      Alert.alert('Dev', 'Notification scheduled for 2 seconds.');
     } catch (e) {
-      Alert.alert('Dev', `Erro: ${String(e)}`);
+      Alert.alert('Dev', `Error: ${String(e)}`);
     }
   };
 

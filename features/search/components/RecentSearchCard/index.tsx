@@ -104,22 +104,20 @@ const RecentSearchCard: FC<Props> = ({ item, onPress, style }) => {
       >
         <View style={styles.overlay}>
           <View style={styles.dialog}>
-            <Text style={styles.dialogTitle}>Remover cidade</Text>
-            <Text style={styles.dialogMessage}>
-              Deseja remover {item.name} das buscas recentes?
-            </Text>
+            <Text style={styles.dialogTitle}>Remove city</Text>
+            <Text style={styles.dialogMessage}>Remove {item.name} from recent searches?</Text>
             <View style={styles.dialogActions}>
               <TouchableOpacity
                 style={styles.dialogButton}
                 onPress={() => setConfirmVisible(false)}
               >
-                <Text style={styles.dialogCancelText}>Cancelar</Text>
+                <Text style={styles.dialogCancelText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.dialogButton, styles.dialogButtonConfirm]}
                 onPress={handleConfirmRemove}
               >
-                <Text style={styles.dialogButtonConfirmText}>Remover</Text>
+                <Text style={styles.dialogButtonConfirmText}>Remove</Text>
               </TouchableOpacity>
             </View>
           </View>

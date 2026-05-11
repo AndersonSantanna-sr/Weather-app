@@ -47,13 +47,13 @@ export const getNextHours = (
 export const formatRelativeTime = (timestamp: number): string => {
   if (!timestamp || !Number.isFinite(timestamp)) return '–';
   const diffMs = Date.now() - timestamp;
-  if (diffMs < 0) return 'agora';
+  if (diffMs < 0) return 'just now';
   const diffMins = Math.floor(diffMs / 60_000);
-  if (diffMins < 1) return 'agora';
-  if (diffMins < 60) return `${diffMins}min atrás`;
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins}min ago`;
   const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `${diffHours}h atrás`;
+  if (diffHours < 24) return `${diffHours}h ago`;
   const diffDays = Math.floor(diffHours / 24);
-  if (diffDays === 1) return 'ontem';
-  return `${diffDays} dias atrás`;
+  if (diffDays === 1) return 'yesterday';
+  return `${diffDays} days ago`;
 };

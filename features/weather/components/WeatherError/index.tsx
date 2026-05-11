@@ -21,18 +21,18 @@ const WeatherError: FC<Props> = ({ onRetry }) => {
     <LinearGradient colors={gradient.colors} locations={[0, 1]} style={{ flex: 1 }}>
       <View style={styles.container}>
         <Ionicons name="cloud-offline-outline" size={80} color="white" style={styles.icon} />
-        <Text style={styles.title}>Algo deu errado</Text>
+        <Text style={styles.title}>Something went wrong</Text>
         <Text style={styles.subtitle}>
-          Não foi possível carregar a previsão. Verifique sua conexão e tente novamente.
+          Unable to load the forecast. Check your connection and try again.
         </Text>
         <TouchableOpacity style={styles.button} onPress={onRetry}>
-          <Text style={styles.buttonText}>Tentar novamente</Text>
+          <Text style={styles.buttonText}>Try again</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.buttonSecondary]}
           onPress={() => router.push('/search')}
         >
-          <Text style={styles.buttonText}>Buscar cidade</Text>
+          <Text style={styles.buttonText}>Search by city</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
