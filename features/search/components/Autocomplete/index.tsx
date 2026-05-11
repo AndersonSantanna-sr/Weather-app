@@ -46,7 +46,7 @@ const Autocomplete: FC = () => {
   return (
     <>
       <Toast
-        message="Erro ao buscar cidades. Tente novamente."
+        message="Failed to search for cities. Please try again."
         visible={toastVisible}
         onHide={handleHideToast}
       />

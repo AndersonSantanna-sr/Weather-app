@@ -50,7 +50,7 @@ export async function scheduleWeatherNotifications(
         await Notifications.scheduleNotificationAsync({
           content: {
             title: city,
-            body: `${city}: ${forecastday.day.condition.text}, máx ${maxTemp}, mín ${minTemp}`,
+            body: `${city}: ${forecastday.day.condition.text}, max ${maxTemp}, min ${minTemp}`,
           },
           trigger: {
             type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -63,8 +63,8 @@ export async function scheduleWeatherNotifications(
         if (rainAlertEnabled && forecastday.day.daily_chance_of_rain >= rainAlertThreshold) {
           await Notifications.scheduleNotificationAsync({
             content: {
-              title: 'Alerta de chuva',
-              body: `Chuva prevista em ${city}. Probabilidade: ${forecastday.day.daily_chance_of_rain}%`,
+              title: 'Rain alert',
+              body: `Rain expected in ${city}. Chance: ${forecastday.day.daily_chance_of_rain}%`,
             },
             trigger: {
               type: Notifications.SchedulableTriggerInputTypes.DATE,
@@ -78,8 +78,8 @@ export async function scheduleWeatherNotifications(
           const maxTemp = getTemperatureUnitLabel(forecastday.day.maxtemp_c, temperatureUnit);
           await Notifications.scheduleNotificationAsync({
             content: {
-              title: 'Alerta de temperatura',
-              body: `Temperatura alta em ${city}: máx ${maxTemp}`,
+              title: 'Temperature alert',
+              body: `High temperature in ${city}: max ${maxTemp}`,
             },
             trigger: {
               type: Notifications.SchedulableTriggerInputTypes.DATE,

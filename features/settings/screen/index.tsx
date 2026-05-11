@@ -126,11 +126,11 @@ const Settings: FC = () => {
         />
       </View>
 
-      <Text style={styles.sectionTitle}>Notificações</Text>
+      <Text style={styles.sectionTitle}>Notifications</Text>
 
       <View style={{ zIndex: 5 }}>
         <ItemSettings
-          title="Alerta de chuva"
+          title="Rain alert"
           icon={<MaterialCommunityIcons name="weather-rainy" size={24} color="black" />}
           input={<Switch value={rainAlertEnabled} onValueChange={setRainAlertEnabled} />}
         />
@@ -138,7 +138,7 @@ const Settings: FC = () => {
       {rainAlertEnabled && (
         <View style={{ zIndex: 4 }}>
           <ItemSettings
-            title="Limite de chuva"
+            title="Rain threshold"
             icon={<MaterialCommunityIcons name="percent" size={24} color="black" />}
             input={
               <SelectOption
@@ -152,14 +152,14 @@ const Settings: FC = () => {
       )}
       <View style={{ zIndex: 3 }}>
         <ItemSettings
-          title="Resumo diário"
+          title="Daily summary"
           icon={<MaterialCommunityIcons name="weather-partly-cloudy" size={24} color="black" />}
           input={<Switch value={dailySummaryEnabled} onValueChange={setDailySummaryEnabled} />}
         />
       </View>
       <View style={{ zIndex: 2 }}>
         <ItemSettings
-          title="Alerta de temperatura"
+          title="Temperature alert"
           icon={<MaterialCommunityIcons name="thermometer" size={24} color="black" />}
           input={
             <Switch value={temperatureAlertEnabled} onValueChange={setTemperatureAlertEnabled} />
@@ -169,7 +169,7 @@ const Settings: FC = () => {
       {temperatureAlertEnabled && (
         <View style={{ zIndex: 1 }}>
           <ItemSettings
-            title="Limite de temperatura"
+            title="Temperature threshold"
             icon={<MaterialCommunityIcons name="thermometer-high" size={24} color="black" />}
             input={
               <SelectOption
