@@ -16,6 +16,40 @@
 
 ---
 
+## Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="docs/img/image1.png" width="180" alt="Splash Screen" /><br/>
+        <sub><b>Splash Screen</b></sub>
+      </td>
+      <td align="center">
+        <img src="docs/img/image2.png" width="180" alt="Weather Forecast" /><br/>
+        <sub><b>Weather Forecast</b></sub>
+      </td>
+      <td align="center">
+        <img src="docs/img/image4.png" width="180" alt="City Search" /><br/>
+        <sub><b>City Search</b></sub>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="docs/img/image3.png" width="180" alt="Settings" /><br/>
+        <sub><b>Settings</b></sub>
+      </td>
+      <td align="center">
+        <img src="docs/img/image5.png" width="180" alt="Error State" /><br/>
+        <sub><b>Error State</b></sub>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+
+---
+
 ## Features
 
 - Current weather + hourly and daily forecast
