@@ -9,13 +9,13 @@ import {
 import Header from '@/features/weather/components/Header';
 import { useForecast } from '@/features/weather/hooks/useForecast';
 import { useUserLocation } from '@/features/weather/hooks/useUserLocation';
+import DevNotificationTest from '@/shared/components/DevNotificationTest';
 import { WEATHER_GRADIENTS } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useSettings } from '@/shared/store/useSettings';
 import { getNextHours } from '@/shared/utils/dateHelpers';
 import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
 import { scheduleWeatherNotifications } from '@/shared/utils/notificationHelpers';
-import DevNotificationTest from '@/shared/components/DevNotificationTest';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect } from 'react';
@@ -23,10 +23,11 @@ import { ActivityIndicator, Modal, ScrollView, StyleSheet, View } from 'react-na
 import { createStyles } from './styles';
 
 export default function TabOneScreen() {
-  const { locationQuery, permissionDenied, retry } = useUserLocation();
+  const { locationQuery, permissionDenied, locationError, retry, retryLocation } =
+    useUserLocation();
   const { selectedQuery } = useSearchStore();
   const activeQuery = selectedQuery ?? locationQuery;
-  const { data: weatherData, isLoading, isError, refetch } = useForecast(activeQuery);
+  const { data: weatherData, isLoading, isFetching, isError, refetch } = useForecast(activeQuery);
   const weatherCondition = mapCodeToCondition(
     weatherData?.current?.condition.code || 0,
     !!weatherData?.current.is_day
@@ -62,9 +63,11 @@ export default function TabOneScreen() {
     temperatureUnit,
   ]);
 
-  if (permissionDenied) return <LocationPermissionDenied onRetry={retry} />;
+  if (permissionDenied && !selectedQuery) return <LocationPermissionDenied onRetry={retry} />;
 
-  if (!activeQuery) {
+  if (locationError && !selectedQuery) return <WeatherError onRetry={retryLocation} />;
+
+  if (!activeQuery || (isLoading && !weatherData)) {
     return (
       <View style={styles.gpsLoadingContainer}>
         <ActivityIndicator size="large" color="#ffffff" />
@@ -94,7 +97,7 @@ export default function TabOneScreen() {
           <SectionDays data={weatherData?.forecast?.forecastday || []} />
         </ScrollView>
       </BlurView>
-      <Modal animationType="slide" transparent={true} visible={isLoading}>
+      <Modal animationType="slide" transparent={true} visible={isFetching && !!weatherData}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
