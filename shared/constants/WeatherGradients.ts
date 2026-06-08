@@ -9,61 +9,92 @@ export enum WeatherCondition {
   DRIZZLE = 'DRIZZLE',
 }
 
-export const WEATHER_GRADIENTS = {
+export type WeatherGradientConfig = {
+  colors: [string, string, string];
+  locations: [number, number, number];
+  darkGlass: boolean;
+  blurTint: 'light' | 'dark';
+  textColor: string;
+  subtextColor: string;
+  faintColor: string;
+  heroText: string;
+  heroSub: string;
+  surface: string;
+  surfaceStrong: string;
+  border: string;
+  divider: string;
+  chip: string;
+};
+
+const LIGHT_GLASS = {
+  darkGlass: false,
+  blurTint: 'light' as const,
+  textColor: '#1B2430',
+  subtextColor: 'rgba(30,41,59,0.62)',
+  faintColor: 'rgba(30,41,59,0.42)',
+  heroText: '#15202E',
+  heroSub: 'rgba(21,32,46,0.72)',
+  surface: 'rgba(255,255,255,0.50)',
+  surfaceStrong: 'rgba(255,255,255,0.66)',
+  border: 'rgba(255,255,255,0.6)',
+  divider: 'rgba(30,41,59,0.10)',
+  chip: 'rgba(255,255,255,0.45)',
+};
+
+const DARK_GLASS = {
+  darkGlass: true,
+  blurTint: 'dark' as const,
+  textColor: 'rgba(255,255,255,0.96)',
+  subtextColor: 'rgba(255,255,255,0.62)',
+  faintColor: 'rgba(255,255,255,0.40)',
+  heroText: '#FFFFFF',
+  heroSub: 'rgba(255,255,255,0.78)',
+  surface: 'rgba(28,30,44,0.34)',
+  surfaceStrong: 'rgba(34,37,54,0.50)',
+  border: 'rgba(255,255,255,0.16)',
+  divider: 'rgba(255,255,255,0.12)',
+  chip: 'rgba(255,255,255,0.14)',
+};
+
+export const WEATHER_GRADIENTS: Record<WeatherCondition, WeatherGradientConfig> = {
   [WeatherCondition.SUNNY]: {
-    colors: ['#56CCF2', '#FFFFFF'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#1B4F72',
-    subtextColor: '#2E86C1',
+    colors: ['#4FC3F0', '#9BDCF7', '#FFFFFF'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
   [WeatherCondition.CLOUDY]: {
-    colors: ['#2E3A59', '#E8EEF5'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#1C2E4A',
-    subtextColor: '#4A6080',
+    colors: ['#2E3A59', '#697999', '#E8EEF5'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
   [WeatherCondition.RAINY]: {
-    colors: ['#4A5568', '#A0AEC0'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#2D3F55',
-    subtextColor: '#506070',
+    colors: ['#46536A', '#6B7889', '#A6B2C2'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
   [WeatherCondition.STORMY]: {
-    colors: ['#1A202C', '#4A5568'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#1A2A3A',
-    subtextColor: '#3D5166',
+    colors: ['#171C26', '#2A3340', '#46515F'],
+    locations: [0, 0.46, 1],
+    ...DARK_GLASS,
   },
   [WeatherCondition.SNOWY]: {
-    colors: ['#B8C6DB', '#F5F7FA'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#2E4057',
-    subtextColor: '#5B7A99',
+    colors: ['#B3C2D8', '#D2DCE9', '#F5F7FA'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
   [WeatherCondition.FOGGY]: {
-    colors: ['#8E9EAB', '#D4D9DD'],
-    cloudColor: '#E8EAED',
-    blurTint: 'light',
-    textColor: '#3D4852',
-    subtextColor: '#6B7A85',
+    colors: ['#8E9EAB', '#B2BCC5', '#D7DCDF'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
   [WeatherCondition.CLEAR_NIGHT]: {
-    colors: ['#0A0E27', '#1B2A6B'],
-    cloudColor: '#203A43',
-    blurTint: 'light',
-    textColor: '#0D2137',
-    subtextColor: '#2C5364',
+    colors: ['#070B22', '#121A47', '#243574'],
+    locations: [0, 0.46, 1],
+    ...DARK_GLASS,
   },
   [WeatherCondition.DRIZZLE]: {
-    colors: ['#4A5568', '#A0AEC0'],
-    cloudColor: '#FFFFFF',
-    blurTint: 'light',
-    textColor: '#2D3F55',
-    subtextColor: '#506070',
+    colors: ['#46536A', '#6B7889', '#A6B2C2'],
+    locations: [0, 0.46, 1],
+    ...LIGHT_GLASS,
   },
-} as const;
+};

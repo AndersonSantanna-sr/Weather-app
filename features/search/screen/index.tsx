@@ -1,5 +1,5 @@
-import { WEATHER_GRADIENTS, WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -15,8 +15,11 @@ const Search: FC = () => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const router = useRouter();
-  const gradient = WEATHER_GRADIENTS[WeatherCondition.DRIZZLE];
+  const { gradientColors, gradientLocations, chip, border, darkGlass } = useWeatherThemeStore(
+    (s) => s
+  );
   const { recentSearches, setSelectedQuery } = useSearchStore();
+  const iconColor = darkGlass ? 'rgba(255,255,255,0.9)' : 'rgba(21,32,46,0.8)';
 
   const handleRecentPress = (lat: number, lon: number) => {
     setSelectedQuery(`${lat},${lon}`);
@@ -28,13 +31,16 @@ const Search: FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
-        colors={gradient.colors}
-        locations={[0, 1]}
-        style={[StyleSheet.absoluteFill]}
+        colors={gradientColors}
+        locations={gradientLocations}
+        style={StyleSheet.absoluteFill}
       />
       <View style={styles.autocompleteContainer}>
-        <TouchableOpacity onPress={handleNavigationBack}>
-          <Ionicons name="arrow-back" size={24} color={theme.colors.background.secondary} />
+        <TouchableOpacity
+          onPress={handleNavigationBack}
+          style={[styles.backButton, { backgroundColor: chip, borderColor: border }]}
+        >
+          <Ionicons name="arrow-back" size={22} color={iconColor} />
         </TouchableOpacity>
         <Autocomplete />
       </View>

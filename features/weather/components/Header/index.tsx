@@ -3,8 +3,8 @@ import Settings from '@/assets/icons/Settings';
 import type { WeatherCondition } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useSettings } from '@/shared/store/useSettings';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { formatDate, getWeekday } from '@/shared/utils/dateHelpers';
-import { truncate } from '@/shared/utils/stringHelpers';
 import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
@@ -17,13 +17,26 @@ import { createStyles } from './styles';
 type Props = {
   weatherCondition: WeatherCondition;
   weatherData?: WeatherData;
+  conditionLabel: string;
+  hiTempC: number;
+  loTempC: number;
+  topInset: number;
 };
 
-const Header: FC<Props> = ({ weatherCondition, weatherData }) => {
+const Header: FC<Props> = ({
+  weatherCondition,
+  weatherData,
+  conditionLabel,
+  hiTempC,
+  loTempC,
+  topInset,
+}) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
   const navigation = useRouter();
   const { temperatureUnit } = useSettings();
+  const { heroText, heroSub, chip, border } = useWeatherThemeStore((s) => s);
+
   const localtime = weatherData?.location.localtime;
   const formatted = localtime
     ? localtime.split(' ')[0]
@@ -31,34 +44,51 @@ const Header: FC<Props> = ({ weatherCondition, weatherData }) => {
         const d = new Date();
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       })();
-  const cityName = truncate(weatherData?.location.name ?? '', 14);
+
+  const cityName = weatherData?.location.name ?? '';
+  const iconColor = 'rgba(255,255,255,0.92)';
+
   const handleNavigationSettings = () => navigation.push('/settings');
   const handleNavigationSearch = () => navigation.push('/search');
 
   return (
-    <View style={styles.container}>
-      <View style={styles.menuContainer}>
-        <TouchableOpacity onPress={handleNavigationSettings}>
-          <Settings color="white" width={20} height={20} />
+    <View style={[styles.container, { paddingTop: topInset + 8 }]}>
+      {/* Top bar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity
+          onPress={handleNavigationSettings}
+          style={[styles.glassButton, { backgroundColor: chip, borderColor: border }]}
+          activeOpacity={0.7}
+        >
+          <Settings color={iconColor} width={20} height={20} />
         </TouchableOpacity>
-        <Text style={styles.title}>Today</Text>
-        <TouchableOpacity onPress={handleNavigationSearch}>
-          <Menu color="white" width={24} height={24} />
+        <TouchableOpacity
+          onPress={handleNavigationSearch}
+          style={[styles.glassButton, { backgroundColor: chip, borderColor: border }]}
+          activeOpacity={0.7}
+        >
+          <Menu color={iconColor} width={22} height={22} />
         </TouchableOpacity>
       </View>
-      <View style={styles.menuContainer}>
-        <Text style={styles.temp}>
+
+      {/* Hero */}
+      <View style={styles.hero}>
+        <Text style={[styles.cityName, { color: heroText }]} numberOfLines={1}>
+          {cityName}
+        </Text>
+        <Text style={[styles.dateText, { color: heroSub }]}>
+          {formatDate(formatted)}. {getWeekday(formatted)}
+        </Text>
+        <View style={styles.iconContainer}>
+          <WeatherIcon iconName={weatherCondition} size={130} />
+        </View>
+        <Text style={[styles.temperature, { color: heroText }]}>
           {getTemperatureUnitLabel(weatherData?.current.temp_c || 0, temperatureUnit)}
         </Text>
-        <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-          <Text style={styles.title}>{cityName}</Text>
-          <Text style={styles.description}>
-            {formatDate(formatted)}. {getWeekday(formatted)}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.weatherIconContainer}>
-        <WeatherIcon iconName={weatherCondition} size={145} />
+        <Text style={[styles.conditionLabel, { color: heroText }]}>{conditionLabel}</Text>
+        <Text style={[styles.hiLo, { color: heroSub }]}>
+          {`H: ${getTemperatureUnitLabel(hiTempC, temperatureUnit)}  ·  L: ${getTemperatureUnitLabel(loTempC, temperatureUnit)}`}
+        </Text>
       </View>
     </View>
   );

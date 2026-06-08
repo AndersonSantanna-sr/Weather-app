@@ -1,7 +1,10 @@
-import ForecastCard from '@/shared/components/ForecastCard';
+import WeatherIcon from '@/shared/components/WeatherIcon';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
+import { useSettings } from '@/shared/store/useSettings';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { formatDate, getWeekday } from '@/shared/utils/dateHelpers';
+import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
+import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
 import React, { type FC } from 'react';
 import { Text, View } from 'react-native';
 import { type WeatherForecastDay } from '../../types/weather';
@@ -14,23 +17,51 @@ type Props = {
 const SectionDays: FC<Props> = ({ data }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const { subtextColor } = useWeatherThemeStore((state) => state);
+  const { subtextColor, textColor, faintColor, surfaceStrong, border, divider } =
+    useWeatherThemeStore((s) => s);
+  const temperatureUnit = useSettings((s) => s.temperatureUnit);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.subtitle, { color: subtextColor }]}>Next {data.length} Days</Text>
-      {data.map((item, index) => (
-        <React.Fragment key={item.date}>
-          <ForecastCard
-            title={getWeekday(item.date)}
-            subtitle={formatDate(item.date)}
-            icon={item.day.condition.code}
-            isDay
-            avgTemperature={item.day.avgtemp_c}
-          />
-          {index < data.length - 1 && <View style={styles.separator} />}
-        </React.Fragment>
-      ))}
+      <Text style={[styles.sectionLabel, { color: subtextColor }]}>{data.length}-Day Forecast</Text>
+      <View style={[styles.surface, { backgroundColor: surfaceStrong, borderColor: border }]}>
+        {data.map((item, index) => {
+          const pop = item.day.daily_chance_of_rain;
+          const condition = mapCodeToCondition(item.day.condition.code, true);
+          return (
+            <View
+              key={item.date}
+              style={[styles.row, index > 0 && { borderTopWidth: 0.6, borderTopColor: divider }]}
+            >
+              <View style={styles.dayBlock}>
+                <Text style={[styles.dayText, { color: textColor }]}>
+                  {index === 0 ? 'Today' : getWeekday(item.date)}
+                </Text>
+                <Text style={[styles.dateText, { color: faintColor }]}>
+                  {formatDate(item.date)}
+                </Text>
+              </View>
+              <View style={styles.iconBlock}>
+                <WeatherIcon iconName={condition} size={28} />
+              </View>
+              <Text
+                style={[
+                  styles.popText,
+                  { color: pop >= 50 ? '#3A7BD0' : faintColor, opacity: pop > 0 ? 1 : 0 },
+                ]}
+              >
+                {pop}%
+              </Text>
+              <Text style={[styles.loTemp, { color: faintColor }]}>
+                {getTemperatureUnitLabel(Math.round(item.day.mintemp_c), temperatureUnit)}
+              </Text>
+              <Text style={[styles.hiTemp, { color: textColor }]}>
+                {getTemperatureUnitLabel(Math.round(item.day.maxtemp_c), temperatureUnit)}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
     </View>
   );
 };

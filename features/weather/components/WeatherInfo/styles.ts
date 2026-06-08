@@ -3,20 +3,36 @@ import { StyleSheet } from 'react-native';
 
 export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
-    container: {
+    card: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
+      alignItems: 'stretch',
+      borderRadius: theme.borderRadius.md,
+      borderWidth: 0.6,
+      marginHorizontal: theme.spacing.md,
+      marginTop: theme.spacing.md,
     },
-    contentContainer: {
-      flexDirection: 'column',
+    metric: {
+      flex: 1,
       alignItems: 'center',
+      paddingVertical: theme.spacing.md,
+      paddingHorizontal: theme.spacing.xs,
+      gap: 5,
     },
-    subtitle: {
-      fontSize: theme.typography.fontSize.sm,
-      marginTop: theme.spacing.sm,
+    label: {
+      fontSize: 11,
+      fontWeight: '700',
+      letterSpacing: 0.5,
+      textTransform: 'uppercase',
     },
-    valueText: {
-      fontSize: theme.typography.fontSize.lg,
-      fontWeight: theme.typography.fontWeight.bold,
+    value: {
+      fontSize: 20,
+      fontWeight: '600',
+    },
+    sub: {
+      fontSize: 12,
+    },
+    divider: {
+      width: 0.6,
+      marginVertical: theme.spacing.md,
     },
   });

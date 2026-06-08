@@ -6,7 +6,7 @@ export const createStyles = (theme: AppTheme) =>
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      width: '80%',
+      width: '78%',
     },
     iconContainer: { paddingHorizontal: theme.spacing.sm },
     input: {

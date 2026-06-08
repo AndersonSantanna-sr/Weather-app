@@ -36,4 +36,13 @@ export const createStyles = (theme: AppTheme) =>
       fontSize: theme.typography.fontSize.md,
       color: `${theme.colors.text.inverse}90`,
     },
+    backButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      borderWidth: 0.6,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: theme.spacing.sm,
+    },
   });

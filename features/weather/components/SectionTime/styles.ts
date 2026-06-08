@@ -5,12 +5,25 @@ export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       paddingHorizontal: theme.spacing.md,
-    },
-    subtitle: {
-      fontSize: theme.typography.fontSize.sm,
       marginTop: theme.spacing.md,
-      marginBottom: theme.spacing.md,
     },
-    separator: { width: theme.spacing.sm },
-    listContentContainer: { paddingBottom: theme.spacing.md },
+    sectionLabel: {
+      fontSize: 12.5,
+      fontWeight: '700',
+      letterSpacing: 0.8,
+      textTransform: 'uppercase',
+      marginBottom: theme.spacing.sm,
+    },
+    card: {
+      borderRadius: theme.borderRadius.md,
+      borderWidth: 0.6,
+      overflow: 'hidden',
+    },
+    listContentContainer: {
+      paddingVertical: theme.spacing.xs,
+    },
+    verticalDivider: {
+      width: 0.6,
+      marginVertical: theme.spacing.sm,
+    },
   });

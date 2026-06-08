@@ -4,39 +4,55 @@ import { StyleSheet } from 'react-native';
 export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
-      position: 'absolute',
-      top: theme.spacing.lg,
-      left: 0,
-      right: 0,
-      alignItems: 'flex-start',
+      paddingBottom: theme.spacing.md,
     },
-    weatherIconContainer: {
-      position: 'absolute',
-      top: theme.spacing.xxl,
-      left: 0,
-      right: 0,
-      alignItems: 'center',
-    },
-    title: {
-      fontSize: theme.typography.fontSize.lg,
-      fontWeight: 'bold',
-      color: 'white',
-    },
-    menuContainer: {
+    topBar: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      width: '100%',
+      paddingHorizontal: theme.spacing.md,
+      paddingBottom: theme.spacing.sm,
+    },
+    glassButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      borderWidth: 0.6,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    hero: {
+      alignItems: 'center',
       paddingHorizontal: theme.spacing.md,
     },
-    temp: {
-      fontSize: theme.typography.fontSize.xxl,
-      fontWeight: 'bold',
-      color: 'white',
-      zIndex: 1,
+    cityName: {
+      fontSize: 26,
+      fontWeight: '600',
+      letterSpacing: -0.3,
     },
-    description: {
-      fontSize: theme.typography.fontSize.sm,
-      color: 'white',
+    dateText: {
+      fontSize: 14,
+      fontWeight: '500',
+      marginTop: 3,
+    },
+    iconContainer: {
+      marginTop: theme.spacing.xs,
+      marginBottom: -theme.spacing.xs,
+    },
+    temperature: {
+      fontSize: 80,
+      fontWeight: '200',
+      lineHeight: 88,
+      letterSpacing: -3,
+    },
+    conditionLabel: {
+      fontSize: 18,
+      fontWeight: '600',
+      marginTop: 2,
+    },
+    hiLo: {
+      fontSize: 15,
+      fontWeight: '500',
+      marginTop: 3,
     },
   });

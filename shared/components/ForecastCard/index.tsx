@@ -3,7 +3,6 @@ import { useSettings } from '@/shared/store/useSettings';
 import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
 import { getTemperatureUnitLabel } from '@/shared/utils/unitHelpers';
-import { BlurView } from 'expo-blur';
 import { isEmpty } from 'lodash';
 import type { FC } from 'react';
 import React from 'react';
@@ -18,16 +17,22 @@ type Props = {
   isDay?: boolean;
   icon: number;
   avgTemperature: number;
+  flat?: boolean;
 };
 
-const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature, isDay }) => {
+const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature, isDay, flat }) => {
   const theme = useAppTheme();
   const temperatureUnit = useSettings((state) => state.temperatureUnit);
   const styles = createStyles(theme);
-  const { textColor, subtextColor } = useWeatherThemeStore((state) => state);
+  const { textColor, subtextColor, surfaceStrong, border } = useWeatherThemeStore((state) => state);
 
   return (
-    <BlurView intensity={70} tint="light" style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        flat ? styles.containerFlat : { backgroundColor: surfaceStrong, borderColor: border },
+      ]}
+    >
       <View style={styles.dateContainer}>
         <Text style={[styles.weekdayText, { color: textColor }]}>{title}</Text>
         <If condition={!isEmpty(subtitle)}>
@@ -35,14 +40,14 @@ const ForecastCard: FC<Props> = ({ title, subtitle, icon, avgTemperature, isDay 
         </If>
       </View>
       <View style={styles.flexContainer}>
+        <WeatherIcon iconName={mapCodeToCondition(icon, !!isDay)} />
+      </View>
+      <View style={styles.flexContainer}>
         <Text style={[styles.temperatureText, { color: textColor }]}>
           {getTemperatureUnitLabel(Number(avgTemperature.toFixed(0)), temperatureUnit)}
         </Text>
       </View>
-      <View style={styles.flexContainer}>
-        <WeatherIcon iconName={mapCodeToCondition(icon, !!isDay)} />
-      </View>
-    </BlurView>
+    </View>
   );
 };
 

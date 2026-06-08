@@ -13,6 +13,7 @@ import DevNotificationTest from '@/shared/components/DevNotificationTest';
 import { WEATHER_GRADIENTS } from '@/shared/constants/WeatherGradients';
 import { useAppTheme } from '@/shared/hooks/useAppTheme';
 import { useSettings } from '@/shared/store/useSettings';
+import { useWeatherThemeStore } from '@/shared/store/useWeatherThemeStore';
 import { getNextHours } from '@/shared/utils/dateHelpers';
 import { mapCodeToCondition } from '@/shared/utils/iconHelpers';
 import { scheduleWeatherNotifications } from '@/shared/utils/notificationHelpers';
@@ -20,6 +21,7 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect } from 'react';
 import { ActivityIndicator, Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createStyles } from './styles';
 
 export default function TabOneScreen() {
@@ -35,6 +37,8 @@ export default function TabOneScreen() {
   const gradient = WEATHER_GRADIENTS[weatherCondition];
   const theme = useAppTheme();
   const styles = createStyles(theme);
+  const setWeatherTheme = useWeatherThemeStore((s) => s.setWeatherTheme);
+  const insets = useSafeAreaInsets();
 
   const rainAlertEnabled = useSettings((s) => s.rainAlertEnabled);
   const rainAlertThreshold = useSettings((s) => s.rainAlertThreshold);
@@ -42,6 +46,26 @@ export default function TabOneScreen() {
   const temperatureAlertEnabled = useSettings((s) => s.temperatureAlertEnabled);
   const temperatureAlertThreshold = useSettings((s) => s.temperatureAlertThreshold);
   const temperatureUnit = useSettings((s) => s.temperatureUnit);
+
+  useEffect(() => {
+    setWeatherTheme({
+      textColor: gradient.textColor,
+      subtextColor: gradient.subtextColor,
+      faintColor: gradient.faintColor,
+      heroText: gradient.heroText,
+      heroSub: gradient.heroSub,
+      surface: gradient.surface,
+      surfaceStrong: gradient.surfaceStrong,
+      border: gradient.border,
+      divider: gradient.divider,
+      chip: gradient.chip,
+      darkGlass: gradient.darkGlass,
+      blurTint: gradient.blurTint,
+      gradientColors: gradient.colors,
+      gradientLocations: gradient.locations,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [weatherCondition, setWeatherTheme]);
 
   useEffect(() => {
     if (!weatherData) return;
@@ -77,15 +101,31 @@ export default function TabOneScreen() {
 
   if (isError && !weatherData) return <WeatherError onRetry={refetch} />;
 
+  const forecastDay0 = weatherData?.forecast?.forecastday[0];
+  const hiTempC = forecastDay0?.day.maxtemp_c ?? weatherData?.current.temp_c ?? 0;
+  const loTempC = forecastDay0?.day.mintemp_c ?? weatherData?.current.temp_c ?? 0;
+
   return (
     <View style={styles.container}>
+      {/* Gradient fills entire background */}
       <LinearGradient
         colors={gradient.colors}
-        locations={[0, 1]}
-        style={[StyleSheet.absoluteFill]}
-        children={<Header weatherData={weatherData} weatherCondition={weatherCondition} />}
+        locations={gradient.locations}
+        style={StyleSheet.absoluteFill}
       />
-      <BlurView intensity={70} tint="light" style={styles.cloudEffect}>
+
+      {/* Header — normal flow, not absolute */}
+      <Header
+        weatherData={weatherData}
+        weatherCondition={weatherCondition}
+        conditionLabel={weatherData?.current.condition.text ?? ''}
+        hiTempC={hiTempC}
+        loTempC={loTempC}
+        topInset={insets.top}
+      />
+
+      {/* Frosted glass panel — flex: 1 fills remaining vertical space */}
+      <BlurView intensity={70} tint={gradient.blurTint} style={styles.cloudEffect}>
         <ScrollView showsHorizontalScrollIndicator={false}>
           <WeatherInfo weatherCurrent={weatherData?.current} />
           <SectionTime
@@ -95,8 +135,10 @@ export default function TabOneScreen() {
             )}
           />
           <SectionDays data={weatherData?.forecast?.forecastday || []} />
+          <View style={{ height: insets.bottom + 16 }} />
         </ScrollView>
       </BlurView>
+
       <Modal animationType="slide" transparent={true} visible={isFetching && !!weatherData}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />

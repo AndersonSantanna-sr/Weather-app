@@ -15,30 +15,34 @@ type Props = {
 const SectionTime: FC<Props> = ({ data }) => {
   const theme = useAppTheme();
   const styles = createStyles(theme);
-  const subtextColor = useWeatherThemeStore((state) => state.subtextColor);
+  const { subtextColor, surfaceStrong, border, divider } = useWeatherThemeStore((s) => s);
   const timeFormat = useSettings((state) => state.timeFormat);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.subtitle, { color: subtextColor }]}>Next hours</Text>
-      <FlatList
-        data={data}
-        horizontal
-        scrollEnabled
-        nestedScrollEnabled
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContentContainer}
-        keyExtractor={(item) => item.time}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ item }) => (
-          <HourlyForecastCard
-            temperature={Number(item.temp_c.toFixed(0))}
-            iconCode={item.condition.code}
-            isDay={Boolean(item.is_day)}
-            time={formatHour(item.time, timeFormat)}
-          />
-        )}
-      />
+      <Text style={[styles.sectionLabel, { color: subtextColor }]}>Hourly Forecast</Text>
+      <View style={[styles.card, { backgroundColor: surfaceStrong, borderColor: border }]}>
+        <FlatList
+          data={data}
+          horizontal
+          scrollEnabled
+          nestedScrollEnabled
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.listContentContainer}
+          keyExtractor={(item) => item.time}
+          ItemSeparatorComponent={() => (
+            <View style={[styles.verticalDivider, { backgroundColor: divider }]} />
+          )}
+          renderItem={({ item }) => (
+            <HourlyForecastCard
+              temperature={Number(item.temp_c.toFixed(0))}
+              iconCode={item.condition.code}
+              isDay={Boolean(item.is_day)}
+              time={formatHour(item.time, timeFormat)}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };

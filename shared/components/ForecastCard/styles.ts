@@ -5,13 +5,20 @@ export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       padding: theme.spacing.md,
-      borderColor: theme.colors.border.default,
+      borderWidth: 0.6,
+      borderRadius: theme.borderRadius.md,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    containerFlat: {
+      padding: theme.spacing.md,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
     },
     dateContainer: {
-      flex: 0.35,
+      flex: 0.45,
       flexDirection: 'column',
     },
     weekdayText: {
@@ -28,8 +35,7 @@ export const createStyles = (theme: AppTheme) =>
       fontWeight: theme.typography.fontWeight.bold,
     },
     flexContainer: {
-      flex: 0.35,
-      flexDirection: 'column',
+      flex: 0.275,
       alignItems: 'flex-end',
       justifyContent: 'center',
     },
